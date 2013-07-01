@@ -25,6 +25,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'minitest'
   gem 'minitest-rails'
+  gem 'mocha', require: false
   gem 'factory_girl'
   gem 'factory_girl_rails'
 end

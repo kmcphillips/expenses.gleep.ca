@@ -1,0 +1,15 @@
+development:
+  host: localhost:3000
+  smtp_settings:
+    address: smtp.gmail.com
+    port: 587
+    domain: gracehrabi.com
+    authentication: plain
+    enable_starttls_auto: true
+    user_name: username
+    password: password
+
+production:
+  host: gracehrabi.com
+  smtp_settings:
+    address: localhost

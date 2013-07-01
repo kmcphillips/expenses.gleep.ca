@@ -10,3 +10,4 @@
 /tmp
 
 /config/database.yml
+/config/mail.yml
