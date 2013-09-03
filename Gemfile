@@ -16,6 +16,10 @@ gem 'quiet_assets'
 gem 'devise'
 gem 'omniauth-openid'
 
+gem 'less-rails'
+gem 'twitter-bootstrap-rails'
+gem 'therubyracer', platform: :ruby, require: 'v8'
+
 group :development do
   gem 'letter_opener'
   gem 'capistrano'
@@ -36,8 +40,4 @@ end
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
-end
-
-group :production do
-  gem 'therubyracer', platform: :ruby, require: 'v8'
 end
