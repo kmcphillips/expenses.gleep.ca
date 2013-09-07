@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 20130803181310) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
+    t.text     "description"
     t.boolean  "income",       default: false
     t.boolean  "essential",    default: false
     t.boolean  "active",       default: true
