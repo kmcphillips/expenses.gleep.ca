@@ -2,7 +2,7 @@ class EntriesController < AuthenticatedController
   before_action :set_entry, only: [:show, :edit, :update, :destroy]
 
   def index
-    @entries = current_household.entries.sorted
+    @entries = current_household.entries.sorted.only_whole
 
     if params[:category_id]
       @entries = @entries.for_category(params[:category_id])
@@ -57,7 +57,7 @@ class EntriesController < AuthenticatedController
 
   def update
     if @entry.update(entry_params)
-      redirect_to @entry, notice: 'Entry was successfully updated.'
+      redirect_to entries_path, notice: 'Entry was successfully updated.'
     else
       render action: 'edit'
     end
@@ -75,6 +75,7 @@ class EntriesController < AuthenticatedController
   end
 
   def entry_params
-    params.require(:entry).permit(:category_id, :description, :amount, :incurred_on)
+    params.require(:entry).permit(:category_id, :description, :amount, :incurred_on, :incurred_until)
   end
+
 end

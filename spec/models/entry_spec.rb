@@ -1,5 +1,9 @@
 require 'spec_helper'
 
 describe Entry do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:entry){ FactoryGirl.create(:entry) }
+
+  describe "#amortized_days" do
+
+  end
 end

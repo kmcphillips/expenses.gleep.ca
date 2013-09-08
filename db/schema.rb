@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130908032727) do
+ActiveRecord::Schema.define(version: 20130908194031) do
 
   create_table "authorized_emails", force: true do |t|
     t.string   "email"
@@ -46,13 +46,17 @@ ActiveRecord::Schema.define(version: 20130908032727) do
     t.integer  "household_id"
     t.integer  "user_id"
     t.text     "description"
-    t.float    "amount"
+    t.integer  "amount"
     t.date     "incurred_on"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.date     "incurred_until"
+    t.float    "amortized_amount"
+    t.integer  "entry_id"
   end
 
   add_index "entries", ["category_id"], name: "index_entries_on_category_id", using: :btree
+  add_index "entries", ["entry_id"], name: "index_entries_on_entry_id", using: :btree
   add_index "entries", ["household_id"], name: "index_entries_on_household_id", using: :btree
   add_index "entries", ["incurred_on"], name: "index_entries_on_incurred_on", using: :btree
   add_index "entries", ["type"], name: "index_entries_on_type", using: :btree

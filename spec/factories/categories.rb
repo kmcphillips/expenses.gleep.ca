@@ -3,5 +3,6 @@ FactoryGirl.define do
     name "a purchase"
     income false
     essential false
+    association :household, factory: :household
   end
 end

@@ -27,7 +27,7 @@
       %th Category
       %th Amount
       %th Description
-      %th Incurred On
+      %th Incurred
       %th Added
       %th Actions
   %tbody
@@ -36,7 +36,11 @@
         %td= entry.category.name
         %td= number_to_currency entry.amount, precision: 0
         %td= entry.description
-        %td= entry.incurred_on.to_s(:words)
+        %td
+          = entry.incurred_on.to_s(:words)
+          - if entry.amortized?
+            \-
+            = entry.incurred_until.to_s(:words)
         %td
           = distance_of_time_in_words_to_now(entry.created_at)
           ago

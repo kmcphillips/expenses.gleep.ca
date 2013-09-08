@@ -9,10 +9,9 @@
   .control-group
     = f.label :amount, class: 'control-label'
     .controls
-      .input-append.input-prepend
+      .input-prepend
         %span.add-on $
         = f.text_field :amount, class: "input-mini"
-        %span.add-on .00
 
   .control-group
     = f.label :description, class: 'control-label'
@@ -23,6 +22,16 @@
     = f.label :incurred_on, class: 'control-label'
     .controls
       = f.date_field :incurred_on
+
+  .control-group
+    = label_tag "Over a fixed period?", nil, class: 'control-label'
+    .controls
+      = check_box_tag :amortized, true, f.object.incurred_until.present?, id: :incurred_until_group_toggle
+
+  .control-group#incurred_until_group
+    = f.label :incurred_until, class: 'control-label'
+    .controls
+      = f.date_field :incurred_until
 
   .form-actions
     = f.submit "Save", class: 'btn btn-primary'

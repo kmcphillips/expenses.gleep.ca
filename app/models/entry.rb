@@ -3,11 +3,17 @@ class Entry < ActiveRecord::Base
   belongs_to :household
   belongs_to :category
 
+  has_many :amortized_entries
+
   validates :user_id, presence: true
   validates :household_id, presence: true
   validates :category_id, presence: true
-  validates :amount, presence: true, numericality: {greater_than: 0, only_integer: true, message: "must be a positive number with the cents rounded off"}
+  validates :amount, presence: true, numericality: {greater_than: 0, message: "must be a positive number with the cents rounded off"}
   validates :incurred_on, presence: true
+  validate :incurred_until_range
+
+  after_save :create_amortized_entries
+  before_validation :set_household
 
   scope :sorted, -> { order("incurred_on DESC") }
   scope :for_category, ->(category_id) { where(category_id: category_id) }
@@ -18,5 +24,49 @@ class Entry < ActiveRecord::Base
     date = Date.today - 1.month
     where("incurred_on BETWEEN ? AND ?", date.beginning_of_month, date.end_of_month)
   }
+  scope :only_whole, -> { where(entry_id: nil) }
+
+  def amortized?
+    incurred_until.present?
+  end
+
+  def amortized_days
+    if amortized?
+      (incurred_until - incurred_on).to_i + 1
+    end
+  end
+
+  def create_amortized_entries
+    if amortized?
+      ActiveRecord::Base.transaction do
+        amortized_entries.destroy_all
+
+        amortized_amount = (amount.to_f / amortized_days)
+
+        (incurred_on..incurred_until).each do |date|
+          self.amortized_entries.create!(
+            user: user,
+            household: household,
+            category: category,
+            description: description,
+            amount: amortized_amount,
+            incurred_on: date
+          )
+        end
+      end
+    end
+  end
+
+  private
+
+  def incurred_until_range
+    if incurred_until && incurred_on && incurred_until <= incurred_on
+      errors.add :incurred_until, "must be after the incurred date"
+    end
+  end
+
+  def set_household
+    household = user.household if user && !household
+  end
 
 end
