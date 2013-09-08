@@ -1,23 +1,19 @@
-- model_class = AuthorizedEmail
 .page-header
-  %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
-%table.table.table-striped
+  %h1 Authorized Emails
+
+= form_for AuthorizedEmail.new, html: { class: 'form-inline' } do |f|
+  = f.email_field :email, required: true
+
+  = f.submit "Add Email", class: 'btn btn-primary'
+
+%table.table.table-striped.table-hover
   %thead
     %tr
-      %th= model_class.human_attribute_name(:id)
-      %th= model_class.human_attribute_name(:email)
-      %th= model_class.human_attribute_name(:household_id)
-      %th= model_class.human_attribute_name(:created_at)
-      %th=t '.actions', :default => t("helpers.actions")
+      %th Email
+      %th Actions
   %tbody
     - @authorized_emails.each do |authorized_email|
       %tr
-        %td= link_to authorized_email.id, authorized_email_path(authorized_email)
         %td= authorized_email.email
-        %td= authorized_email.household_id
-        %td=l authorized_email.created_at
         %td
-          = link_to t('.edit', :default => t("helpers.links.edit")), edit_authorized_email_path(authorized_email), :class => 'btn btn-mini'
           = link_to t('.destroy', :default => t("helpers.links.destroy")), authorized_email_path(authorized_email), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-mini btn-danger'
-
-= link_to t('.new', :default => t("helpers.links.new")), new_authorized_email_path, :class => 'btn btn-primary'

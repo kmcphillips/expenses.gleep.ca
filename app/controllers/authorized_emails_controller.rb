@@ -1,11 +1,11 @@
-class AuthorizedEmailsController < ApplicationController
+class AuthorizedEmailsController < AuthenticatedController
 
   def index
-    @authorized_emails = current_household
+    @authorized_emails = current_household.authorized_emails
   end
 
   def create
-    @authorized_email = AuthorizedEmail.new(authorized_email_params)
+    @authorized_email = current_household.authorized_emails.build(authorized_email_params)
 
     if @authorized_email.save
       redirect_to authorized_emails_path, notice: 'Authorized email was successfully created.'
