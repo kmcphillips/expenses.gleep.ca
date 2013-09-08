@@ -3,6 +3,35 @@ class EntriesController < AuthenticatedController
 
   def index
     @entries = current_household.entries
+
+    if params[:category_id]
+      @entries = @entries.for_category(params[:category_id])
+      @filter_title = Category.find(params[:category_id]).name
+
+    elsif params[:type]
+      case params[:type]
+      when 'expense'
+        @entries = @entries.expense
+        @filter_title = "expenses"
+      when 'income'
+        @entries = @entries.income
+        @filter_title = "income"
+      when 'scheduled'
+        @entries = @entries # TODO
+        @filter_title = "TODO"
+      end
+
+    elsif params[:scope]
+      case params[:scope]
+      when 'this_month'
+        @entries = @entries.this_month
+        @filter_title = "this month"
+      when 'last_month'
+        @entries = @entries.last_month
+        @filter_title = "last month"
+      end
+    end
+
   end
 
   def show

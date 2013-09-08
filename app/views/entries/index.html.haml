@@ -1,5 +1,23 @@
+- content_for :sidebar do
+  .well.sidebar-nav
+    %ul.nav.nav-list
+      %li.nav-header Entries by Date
+      %li= link_to "This Month", entries_path(scope: "this_month")
+      %li= link_to "Last Month", entries_path(scope: "last_month")
+      %li.nav-header Entries by Type
+      %li= link_to "Scheduled", entries_path(type: "scheduled")
+      %li= link_to "Income", entries_path(type: "income")
+      %li= link_to "Expenses", entries_path(type: "expense")
+      %li.nav-header Entries For
+      %li
+        = select_tag :entry_type_filter, grouped_options_for_select(current_household.categories_for_select), id: "entry_type_filter_select"
+
 .page-header
-  %h1 Entries
+  %h1
+    Entries
+    - if @filter_title.present?
+      for
+      = @filter_title
 
 = link_to "Add Entry", new_entry_path, class: 'btn btn-primary'
 
