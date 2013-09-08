@@ -8,8 +8,8 @@
     %tr
       %th Name
       %th Description
-      %th Income?
       %th Essential?
+      %th Income?
       %th Active?
       %th Actions
   %tbody
@@ -17,8 +17,8 @@
       %tr
         %td= link_to category.name, edit_category_path(category)
         %td= category.description
-        %td= boolean_glyph category.income
         %td= boolean_glyph category.essential
+        %td= boolean_glyph category.income
         %td= boolean_glyph category.active
         %td
           = link_to t('.edit', :default => t("helpers.links.edit")), edit_category_path(category), :class => 'btn btn-mini'

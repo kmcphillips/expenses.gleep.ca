@@ -34,7 +34,7 @@
     - @entries.each do |entry|
       %tr
         %td= entry.category.name
-        %td= entry.amount
+        %td= number_to_currency entry.amount, precision: 0
         %td= entry.description
         %td= entry.incurred_on.to_s(:words)
         %td
