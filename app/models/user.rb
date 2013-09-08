@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   validates :email, presence: true
 
   def authorized?
-    authorized_emails.include?(email)
+    household.authorized_emails.where(email: email).first
   end
 
   class << self
