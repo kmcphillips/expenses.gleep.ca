@@ -2,7 +2,7 @@ class EntriesController < AuthenticatedController
   before_action :set_entry, only: [:show, :edit, :update, :destroy]
 
   def index
-    @entries = current_household.entries.sorted.only_whole
+    @entries = current_household.entries.sorted.unique
 
     if params[:category_id]
       @entries = @entries.for_category(params[:category_id])

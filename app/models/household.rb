@@ -3,6 +3,7 @@ class Household < ActiveRecord::Base
   has_many :categories
   has_many :authorized_emails
   has_many :entries
+  has_many :entry_schedules
 
   validates :name, presence: true
 

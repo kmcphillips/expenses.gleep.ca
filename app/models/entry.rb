@@ -2,13 +2,14 @@ class Entry < ActiveRecord::Base
   belongs_to :user
   belongs_to :household
   belongs_to :category
+  belongs_to :entry_schedule
 
   has_many :amortized_entries
 
   validates :user_id, presence: true
   validates :household_id, presence: true
   validates :category_id, presence: true
-  validates :amount, presence: true, numericality: {greater_than: 0, message: "must be a positive number with the cents rounded off"}
+  validates :amount, presence: true, numericality: {greater_than: 0, message: "must be a positive number"}
   validates :incurred_on, presence: true
   validate :incurred_until_range
 
@@ -24,7 +25,7 @@ class Entry < ActiveRecord::Base
     date = Date.today - 1.month
     where("incurred_on BETWEEN ? AND ?", date.beginning_of_month, date.end_of_month)
   }
-  scope :only_whole, -> { where(entry_id: nil) }
+  scope :unique, -> { where(entry_id: nil) }
 
   def amortized?
     incurred_until.present?

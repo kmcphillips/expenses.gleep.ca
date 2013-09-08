@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130908194031) do
+ActiveRecord::Schema.define(version: 20130908203159) do
 
   create_table "authorized_emails", force: true do |t|
     t.string   "email"
@@ -53,14 +53,32 @@ ActiveRecord::Schema.define(version: 20130908194031) do
     t.date     "incurred_until"
     t.float    "amortized_amount"
     t.integer  "entry_id"
+    t.integer  "entry_schedule_id"
   end
 
   add_index "entries", ["category_id"], name: "index_entries_on_category_id", using: :btree
   add_index "entries", ["entry_id"], name: "index_entries_on_entry_id", using: :btree
+  add_index "entries", ["entry_schedule_id"], name: "index_entries_on_entry_schedule_id", using: :btree
   add_index "entries", ["household_id"], name: "index_entries_on_household_id", using: :btree
   add_index "entries", ["incurred_on"], name: "index_entries_on_incurred_on", using: :btree
   add_index "entries", ["type"], name: "index_entries_on_type", using: :btree
   add_index "entries", ["user_id"], name: "index_entries_on_user_id", using: :btree
+
+  create_table "entry_schedules", force: true do |t|
+    t.string   "name"
+    t.integer  "category_id"
+    t.integer  "household_id"
+    t.float    "amount"
+    t.date     "starts_on"
+    t.string   "frequency"
+    t.boolean  "active",       default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "entry_schedules", ["active"], name: "index_entry_schedules_on_active", using: :btree
+  add_index "entry_schedules", ["category_id"], name: "index_entry_schedules_on_category_id", using: :btree
+  add_index "entry_schedules", ["household_id"], name: "index_entry_schedules_on_household_id", using: :btree
 
   create_table "households", force: true do |t|
     t.string   "name"
