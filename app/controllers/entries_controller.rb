@@ -2,7 +2,7 @@ class EntriesController < AuthenticatedController
   before_action :set_entry, only: [:show, :edit, :update, :destroy]
 
   def index
-    @entries = current_household.entries
+    @entries = current_household.entries.sorted
 
     if params[:category_id]
       @entries = @entries.for_category(params[:category_id])
@@ -25,10 +25,10 @@ class EntriesController < AuthenticatedController
       case params[:scope]
       when 'this_month'
         @entries = @entries.this_month
-        @filter_title = "this month"
+        @filter_title = Date.today.to_s(:month)
       when 'last_month'
         @entries = @entries.last_month
-        @filter_title = "last month"
+        @filter_title = (Date.today - 1.month).to_s(:month)
       end
     end
 

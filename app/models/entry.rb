@@ -9,6 +9,7 @@ class Entry < ActiveRecord::Base
   validates :amount, presence: true, numericality: {greater_than: 0, only_integer: true, message: "must be a positive number with the cents rounded off"}
   validates :incurred_on, presence: true
 
+  scope :sorted, -> { order("incurred_on DESC") }
   scope :for_category, ->(category_id) { where(category_id: category_id) }
   scope :expense, -> { includes(:category).where("categories.income = ?", false) }
   scope :income, -> { includes(:category).where("categories.income = ?", true) }
