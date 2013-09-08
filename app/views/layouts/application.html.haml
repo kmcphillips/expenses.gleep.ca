@@ -23,9 +23,10 @@
 
     .container-fluid
       .row-fluid
-        .span3
-          = render partial: 'shared/sidebar'
-        .span9
+        - if content_for?(:sidebar)
+          .span3
+            = yield :sidebar
+        %div{class: (content_for?(:sidebar) ? "span9" : "span12")}
           = bootstrap_flash
           = yield
 
