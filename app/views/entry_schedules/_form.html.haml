@@ -21,7 +21,7 @@
   .control-group
     = f.label :frequency, class: 'control-label'
     .controls
-      = f.text_field :frequency
+      = f.select :frequency, options_for_select(EntrySchedule::FREQUENCIES.map{|f| [f.humanize, f]}, selected: f.object.frequency)
 
   .control-group
     = f.label :starts_on, class: 'control-label'

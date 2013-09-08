@@ -1,5 +1,10 @@
 require 'spec_helper'
 
 describe EntrySchedule do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:user){ FactoryGirl.create(:user) }
+  let(:household){ user.household }
+
+  it "should " do
+    binding.pry
+  end
 end

@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   private
 
   def assign_default_household
-    update_attribute :household, AuthorizedEmail.where(email: email).last.try(:household)
+    update_attribute :household, AuthorizedEmail.where(email: email).last.try(:household) unless household
   end
 
   class << self
