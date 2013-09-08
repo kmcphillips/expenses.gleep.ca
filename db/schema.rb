@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130907173834) do
+ActiveRecord::Schema.define(version: 20130908032727) do
 
   create_table "authorized_emails", force: true do |t|
     t.string   "email"
@@ -39,6 +39,24 @@ ActiveRecord::Schema.define(version: 20130907173834) do
   add_index "categories", ["household_id"], name: "index_categories_on_household_id", using: :btree
   add_index "categories", ["income"], name: "index_categories_on_income", using: :btree
   add_index "categories", ["name"], name: "index_categories_on_name", using: :btree
+
+  create_table "entries", force: true do |t|
+    t.string   "type"
+    t.integer  "category_id"
+    t.integer  "household_id"
+    t.integer  "user_id"
+    t.text     "description"
+    t.float    "amount"
+    t.date     "incurred_on"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "entries", ["category_id"], name: "index_entries_on_category_id", using: :btree
+  add_index "entries", ["household_id"], name: "index_entries_on_household_id", using: :btree
+  add_index "entries", ["incurred_on"], name: "index_entries_on_incurred_on", using: :btree
+  add_index "entries", ["type"], name: "index_entries_on_type", using: :btree
+  add_index "entries", ["user_id"], name: "index_entries_on_user_id", using: :btree
 
   create_table "households", force: true do |t|
     t.string   "name"

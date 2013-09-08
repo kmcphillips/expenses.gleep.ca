@@ -1,0 +1,8 @@
+- if error_messages.errors.any?
+  .alert.alert-error
+    %button.close{type: "button", :'data-dismiss' => "alert"} &times;
+    %p
+      %h4 Could not save:
+    %ul
+      - error_messages.errors.full_messages.each do |msg|
+        %li= msg

@@ -1,0 +1,27 @@
+.page-header
+  %h1 Entries
+
+= link_to "Add Entry", new_entry_path, class: 'btn btn-primary'
+
+%table.table.table-striped.table-hover
+  %thead
+    %tr
+      %th Category
+      %th Amount
+      %th Description
+      %th Incurred On
+      %th Added
+      %th Actions
+  %tbody
+    - @entries.each do |entry|
+      %tr
+        %td= entry.category.name
+        %td= entry.amount
+        %td= entry.description
+        %td= entry.incurred_on
+        %td
+          = distance_of_time_in_words_to_now(entry.created_at)
+          ago
+        %td
+          = link_to "Edit", edit_entry_path(entry), class: 'btn btn-mini'
+          = link_to "Delete", entry_path(entry), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-mini btn-danger'

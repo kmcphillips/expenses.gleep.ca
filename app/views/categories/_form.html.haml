@@ -26,5 +26,5 @@
         = f.check_box :active
 
   .form-actions
-    = f.submit nil, class: 'btn btn-primary'
-    = link_to t('.cancel', default: t("helpers.links.cancel")), categories_path, class: 'btn'
+    = f.submit "Save", class: 'btn btn-primary'
+    = link_to "Cancel", categories_path, class: 'btn'

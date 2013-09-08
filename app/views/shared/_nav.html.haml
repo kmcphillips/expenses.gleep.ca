@@ -1,5 +1,7 @@
 = nav_bar responsive: true, brand: "Expenses", brand_link: root_path, inverse: true do
   = menu_group do
+    = menu_item "Add Entry", new_entry_path
+    = menu_item "Entries", entries_path
 
     = drop_down "Admin" do
       = menu_item "Categories", categories_path
