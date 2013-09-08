@@ -6,8 +6,16 @@ class User < ActiveRecord::Base
 
   validates :email, presence: true
 
+  after_create :assign_default_household
+
   def authorized?
-    household.authorized_emails.where(email: email).first
+    AuthorizedEmail.where(email: email).first
+  end
+
+  private
+
+  def assign_default_household
+    update_attribute :household, AuthorizedEmail.where(email: email).last.try(:household)
   end
 
   class << self
