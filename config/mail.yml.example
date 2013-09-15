@@ -3,13 +3,13 @@ development:
   smtp_settings:
     address: smtp.gmail.com
     port: 587
-    domain: expences.gleep.ca
+    domain: expenses.gleep.ca
     authentication: plain
     enable_starttls_auto: true
     user_name: username
     password: password
 
 production:
-  host: expences.gleep.ca
+  host: expenses.gleep.ca
   smtp_settings:
     address: localhost
