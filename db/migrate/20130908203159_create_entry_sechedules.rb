@@ -1,4 +1,4 @@
-class CreateEntrySchedules < ActiveRecord::Migration
+class CreateEntrySechedules < ActiveRecord::Migration
   def change
     create_table :entry_schedules do |t|
       t.string :name
