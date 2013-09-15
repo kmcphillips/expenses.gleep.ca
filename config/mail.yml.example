@@ -3,13 +3,13 @@ development:
   smtp_settings:
     address: smtp.gmail.com
     port: 587
-    domain: gracehrabi.com
+    domain: expences.gleep.ca
     authentication: plain
     enable_starttls_auto: true
     user_name: username
     password: password
 
 production:
-  host: gracehrabi.com
+  host: expences.gleep.ca
   smtp_settings:
     address: localhost

@@ -1,8 +1,8 @@
 require "bundler/capistrano"
 require "rvm/capistrano"
-require "whenever/capistrano"
 
-# set :whenever_command, "bundle exec whenever"
+set :whenever_command, "bundle exec whenever"
+require "whenever/capistrano"
 
 set :application, "Expenses"
 set :repository,  "git://github.com/kmcphillips/expenses.gleep.ca.git"
