@@ -224,16 +224,15 @@ describe EntrySchedule do
       entry_schedule.stub(:period_for).with(date).and_return(period)
     end
 
-    subject { entry_schedule.build_entry(date) }
+    subject{ entry_schedule.build_entry(date) }
 
-    it { should be_valid }
+    it{ should be_valid }
     its(:category){ should eq(category) }
     its(:description){ should eq(entry_schedule.name) }
     its(:amount){ should eq(entry_schedule.amount) }
     its(:incurred_on){ should eq(date) }
     its(:incurred_until){ should eq(Date.new(2012, 1, 31)) }
     its(:entry_schedule){ should eq(entry_schedule) }
-
   end
 
 end
