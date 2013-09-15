@@ -25,29 +25,47 @@ class EntrySchedule < ActiveRecord::Base
   end
 
   def period_for(date)
-    case frequency
-    when 'monthly'
+    PeriodCalculator.new(date, frequency).period
+  end
 
-      # starts_on.day == today.day || (today.end_of_month && starts_on.day > today.day)
-    when 'twice_monthly'
+  def applies_today?
+    active? && current_period.first == Date.today
+  end
+
+  private
+
+  class PeriodCalculator
+    attr_reader :date
+
+    def initialize(date, frequency)
+      raise "Unknown frequency '#{ frequency }'" unless EntrySchedule::FREQUENCIES.include?(frequency)
+      @date = date
+      @frequency = frequency
+    end
+
+    def period
+      send(@frequency)
+    end
+
+    private
+
+    def monthly
+      
+      from..to
+    end
+
+    def twice_monthly
       if date.day < 15
         date.beginning_of_month..Date.new(date.year, date.month, 14)
       else
         Date.new(date.year, date.month, 15)..date.end_of_month
       end
-    when 'every_two_weeks'
-      # (starts_on - today).to_i % 14 == 0
-    when 'quarterly'
-
-    when 'yearly'
-      
-    else
-      raise "Unkown frequency '#{ frequency }'"
     end
-  end
 
-  def applies_today?
-    active? && current_period.first == Date.today
+    def every_two_weeks
+      # (starts_on - today).to_i % 14 == 0
+    end
+
   end
 
 end

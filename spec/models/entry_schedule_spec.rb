@@ -39,7 +39,30 @@ describe EntrySchedule do
   describe "#period_for" do
     context "monthly" do
       let(:es){ EntrySchedule.new params.merge(frequency: 'monthly') }
+      let(:before_period){ Date.new(2013, 8, 12)..Date.new(2013, 9, 11) }
+      let(:current_period){ Date.new(2013, 9, 12)..Date.new(2013, 10, 11) }
+      let(:after_period){ Date.new(2013, 10, 12)..Date.new(2013, 11, 11) }
 
+      it "should know the correct date range" do
+        expect(es.period_for(Date.new(2013, 8, 12))).to eq(before_period)
+        expect(es.period_for(Date.new(2013, 8, 20))).to eq(before_period)
+        expect(es.period_for(Date.new(2013, 9, 2))).to eq(before_period)
+        expect(es.period_for(Date.new(2013, 9, 11))).to eq(before_period)
+
+        expect(es.period_for(Date.new(2013, 9, 12))).to eq(current_period)
+        expect(es.period_for(Date.new(2013, 9, 30))).to eq(current_period)
+        expect(es.period_for(Date.new(2013, 10, 1))).to eq(current_period)
+        expect(es.period_for(Date.new(2013, 10, 11))).to eq(current_period)
+
+        expect(es.period_for(Date.new(2013, 10, 12))).to eq(after_period)
+        expect(es.period_for(Date.new(2013, 10, 26))).to eq(after_period)
+        expect(es.period_for(Date.new(2013, 11, 1))).to eq(after_period)
+        expect(es.period_for(Date.new(2013, 11, 11))).to eq(after_period)
+      end
+
+      it "should handle the end of month edge case" do
+        
+      end
     end
 
     context "twice_monthly" do
