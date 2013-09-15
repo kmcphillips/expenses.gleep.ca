@@ -11,3 +11,5 @@
 
 /config/database.yml
 /config/mail.yml
+
+/private_seed.rb

@@ -1,5 +1,5 @@
 .page-header
-  %h1 Entry Schedule
+  %h2 Entry Schedule
 
 %p= link_to "New Schedule", new_entry_schedule_path, class: 'btn btn-primary'
 
@@ -18,7 +18,7 @@
         %td= entry_schedule.name
         %td= entry_schedule.category.name
         %td= number_to_currency entry_schedule.amount, precision: 0
-        %td= entry_schedule.frequency
+        %td= entry_schedule.frequency.humanize
         %td= boolean_glyph entry_schedule.active?
         %td
           = link_to "Edit", edit_entry_schedule_path(entry_schedule), class: 'btn btn-mini'

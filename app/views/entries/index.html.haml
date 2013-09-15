@@ -13,7 +13,7 @@
         = select_tag :entry_type_filter, grouped_options_for_select(current_household.categories_for_select), id: "entry_type_filter_select"
 
 .page-header
-  %h1
+  %h2
     Entries
     - if @filter_title.present?
       for

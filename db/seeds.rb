@@ -58,3 +58,6 @@ class DatabaseSeeds
 end
 
 DatabaseSeeds.new
+
+require ENV["PRIVATE_SEED"] if File.exists? ENV["PRIVATE_SEED"]
+
