@@ -15,9 +15,9 @@
       = f.check_box :income
 
   .control-group
-    = f.label :essential, class: 'control-label'
+    = f.label :category_type, class: 'control-label', value: "Type"
     .controls
-      = f.check_box :essential
+      = f.select :category_type, options_for_select(Category::TYPES.map{|c| [c.humanize, c]}, selected: f.object.category_type)
 
   - if !@category.new_record?
     .control-group

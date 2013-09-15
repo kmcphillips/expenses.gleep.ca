@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130914235427) do
+ActiveRecord::Schema.define(version: 20130915142411) do
 
   create_table "authorized_emails", force: true do |t|
     t.string   "email"
@@ -26,16 +26,16 @@ ActiveRecord::Schema.define(version: 20130914235427) do
   create_table "categories", force: true do |t|
     t.string   "name"
     t.text     "description"
-    t.boolean  "income",       default: false
-    t.boolean  "essential",    default: false
-    t.boolean  "active",       default: true
+    t.boolean  "income",        default: false
+    t.boolean  "active",        default: true
     t.integer  "household_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "category_type", default: "non-essential"
   end
 
   add_index "categories", ["active"], name: "index_categories_on_active", using: :btree
-  add_index "categories", ["essential"], name: "index_categories_on_essential", using: :btree
+  add_index "categories", ["category_type"], name: "index_categories_on_category_type", using: :btree
   add_index "categories", ["household_id"], name: "index_categories_on_household_id", using: :btree
   add_index "categories", ["income"], name: "index_categories_on_income", using: :btree
   add_index "categories", ["name"], name: "index_categories_on_name", using: :btree

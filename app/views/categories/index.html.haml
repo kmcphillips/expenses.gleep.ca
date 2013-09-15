@@ -8,7 +8,7 @@
     %tr
       %th Name
       %th Description
-      %th Essential?
+      %th Type
       %th Income?
       %th Active?
       %th Actions
@@ -17,7 +17,7 @@
       %tr
         %td= link_to category.name, edit_category_path(category)
         %td= category.description
-        %td= boolean_glyph category.essential
+        %td= category.category_type.humanize
         %td= boolean_glyph category.income
         %td= boolean_glyph category.active
         %td
