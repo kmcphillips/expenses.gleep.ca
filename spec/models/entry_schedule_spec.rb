@@ -7,6 +7,22 @@ describe EntrySchedule do
   let(:params){ {name: "Name", category: category, household: household, amount: 12, frequency: 'monthly', starts_on: date} }
   let(:date){ "2012-01-01" }
 
+  describe "validations" do
+    context "starts_on" do
+      it "should be valid with a date" do
+        expect(EntrySchedule.new(params)).to be_valid
+      end
+
+      it "should be valid twice_monthly without a date" do
+        expect(EntrySchedule.new(params.merge(frequency: 'twice_monthly', starts_on: nil))).to be_valid
+      end
+
+      it "should not be valid without a date" do
+        expect(EntrySchedule.new(params.merge(starts_on: nil))).to_not be_valid
+      end
+    end
+  end
+
   describe "#applies_today?" do
     let(:entry_schedule){ EntrySchedule.new params.merge(starts_on: Date.today) }
 
@@ -103,11 +119,40 @@ describe EntrySchedule do
     context "every_two_weeks" do
       let(:es){ EntrySchedule.new params.merge(frequency: 'every_two_weeks') }
 
+
     end
 
     context "quarterly" do
-      let(:es){ EntrySchedule.new params.merge(frequency: 'quarterly') }
+      let(:es){ EntrySchedule.new params.merge(frequency: 'quarterly', starts_on: Date.new(2012, 1, 1)) }
+      let(:q1){ Date.new(2013, 1, 1)..Date.new(2013, 3, 31) }
+      let(:q2){ Date.new(2013, 4, 1)..Date.new(2013, 6,30) }
+      let(:q3){ Date.new(2013, 7, 1)..Date.new(2013, 9, 30) }
+      let(:q4){ Date.new(2013, 10, 1)..Date.new(2013, 12, 31) }
 
+      it "should know the correct date range" do
+        expect(es.period_for(Date.new(2013, 1, 1))).to eq(q1)
+        expect(es.period_for(Date.new(2013, 2, 12))).to eq(q1)
+        expect(es.period_for(Date.new(2013, 3, 31))).to eq(q1)
+
+        expect(es.period_for(Date.new(2013, 4, 1))).to eq(q2)
+        expect(es.period_for(Date.new(2013, 5, 12))).to eq(q2)
+        expect(es.period_for(Date.new(2013, 6, 30))).to eq(q2)
+
+        expect(es.period_for(Date.new(2013, 7, 1))).to eq(q3)
+        expect(es.period_for(Date.new(2013, 8, 12))).to eq(q3)
+        expect(es.period_for(Date.new(2013, 9, 30))).to eq(q3)
+
+        expect(es.period_for(Date.new(2013, 10, 1))).to eq(q4)
+        expect(es.period_for(Date.new(2013, 11, 12))).to eq(q4)
+        expect(es.period_for(Date.new(2013, 12, 31))).to eq(q4)
+      end
+
+      it "should catch the end of month edge cases" do
+        mar31 = EntrySchedule.new params.merge(frequency: 'quarterly', starts_on: Date.new(2013, 3, 31))
+
+        expect(mar31.period_for(Date.new(2013, 6, 29))).to eq(Date.new(2013, 3, 31)..Date.new(2013, 6, 29))
+        expect(mar31.period_for(Date.new(2013, 6, 30))).to eq(Date.new(2013, 6, 30)..Date.new(2013, 9, 29))
+      end
     end
 
     context "yearly" do

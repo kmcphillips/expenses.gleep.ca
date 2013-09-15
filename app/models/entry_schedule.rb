@@ -17,6 +17,7 @@ class EntrySchedule < ActiveRecord::Base
   validates :household_id, presence: true
   validates :amount, presence: true, numericality: {greater_than: 0, message: "must be a positive number"}
   validates :frequency, presence: true, inclusion: FREQUENCIES
+  validates :starts_on, presence: {if: ->(es) { es.frequency != 'twice_monthly'}}
 
   scope :active, -> { where(active: true) }
 
@@ -39,12 +40,14 @@ class EntrySchedule < ActiveRecord::Base
 
     def initialize(date, frequency, starts_on)
       raise "Unknown frequency '#{ frequency }'" unless EntrySchedule::FREQUENCIES.include?(frequency)
+
       @date = date
       @frequency = frequency
       @starts_on = starts_on
     end
 
     def period
+      return nil if starts_on.present? && date < starts_on
       send(@frequency)
     end
 
@@ -74,7 +77,14 @@ class EntrySchedule < ActiveRecord::Base
     end
 
     def quarterly
-      # TODO
+      to = starts_on
+      offset_quarters = 0
+      offset_quarters += 1 until (to + (offset_quarters * 3).months) > date
+
+      from = to + ((offset_quarters - 1) * 3).months
+      to = (from + 3.months) - 1.day
+
+      from..to
     end
 
     def yearly
