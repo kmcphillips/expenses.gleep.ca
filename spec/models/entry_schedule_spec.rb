@@ -15,19 +15,24 @@ describe EntrySchedule do
       expect(entry_schedule.applies_today?).to be_false
     end
 
-    it "should return true for yearly if it matches today, but not tomorrow" do
-      entry_schedule.frequency = 'yearly'
+    it "should return true if the current period starts today" do
+      entry_schedule.should_receive(:current_period).and_return(Date.today...(Date.today + 2.days))
       expect(entry_schedule.applies_today?).to be_true
-      entry_schedule.starts_on = Date.today + 1
-      expect(entry_schedule.applies_today?).to be_false
     end
 
-    it "should return true for monthly if it matches today and a month from today, but not tomorrow" do
-      pending
-      entry_schedule.frequency = 'monthly'
-      expect(entry_schedule.applies_today?).to be_true
-      entry_schedule.starts_on = Date.today + 1.month
+    it "should return true if the current period does not start today" do
+      entry_schedule.should_receive(:current_period).and_return((Date.today - 2.days)...(Date.today + 2.days))
       expect(entry_schedule.applies_today?).to be_false
+    end
+  end
+
+  describe "#current_period" do
+    let(:entry_schedule){ EntrySchedule.new params }
+
+    it "should return the period_for today" do
+      result = double
+      entry_schedule.should_receive(:period_for).with(Date.today).and_return(result)
+      expect(entry_schedule.current_period).to equal(result)
     end
   end
 

@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   after_create :assign_default_household
 
   def authorized?
-    AuthorizedEmail.where(email: email).first
+    !!AuthorizedEmail.where(email: email).first
   end
 
   private

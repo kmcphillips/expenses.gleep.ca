@@ -20,25 +20,34 @@ class EntrySchedule < ActiveRecord::Base
 
   scope :active, -> { where(active: true) }
 
-  def applies_today?
-    return false unless active?
+  def current_period
+    period_for Date.today
+  end
 
-    today = Date.today
-
+  def period_for(date)
     case frequency
     when 'monthly'
-      starts_on.day == today.day || (today.end_of_month && starts_on.day > today.day)
+
+      # starts_on.day == today.day || (today.end_of_month && starts_on.day > today.day)
     when 'twice_monthly'
-      today.day == 1 || today.day == 15
+      if date.day < 15
+        date.beginning_of_month..Date.new(date.year, date.month, 14)
+      else
+        Date.new(date.year, date.month, 15)..date.end_of_month
+      end
     when 'every_two_weeks'
-      (starts_on - today).to_i % 14 == 0
+      # (starts_on - today).to_i % 14 == 0
     when 'quarterly'
 
     when 'yearly'
-      today.day == starts_on.day && today.month == starts_on.month
+      
     else
       raise "Unkown frequency '#{ frequency }'"
     end
+  end
+
+  def applies_today?
+    active? && current_period.first == Date.today
   end
 
 end
