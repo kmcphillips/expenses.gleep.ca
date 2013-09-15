@@ -30,7 +30,7 @@ class EntrySchedule < ActiveRecord::Base
   end
 
   def applies_today?
-    active? && current_period.first == Date.today
+    active? && current_period.try(:first) == Date.today
   end
 
   private
@@ -73,7 +73,9 @@ class EntrySchedule < ActiveRecord::Base
     end
 
     def every_two_weeks
-      # (starts_on - today).to_i % 14 == 0
+      to = starts_on
+      to += 14.days until to > date
+      (to - 14.days)..(to - 1.day)
     end
 
     def quarterly

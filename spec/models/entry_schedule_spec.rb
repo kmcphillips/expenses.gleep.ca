@@ -117,9 +117,39 @@ describe EntrySchedule do
     end
 
     context "every_two_weeks" do
-      let(:es){ EntrySchedule.new params.merge(frequency: 'every_two_weeks') }
+      let(:es){ EntrySchedule.new params.merge(frequency: 'every_two_weeks', starts_on: Date.new(2013, 1, 1)) }
+      let(:wk1){ Date.new(2013, 1, 1)..Date.new(2013, 1, 14) }
+      let(:wk2){ Date.new(2013, 1, 15)..Date.new(2013, 1, 28) }
+      let(:wk3){ Date.new(2013, 1, 29)..Date.new(2013, 2, 11) }
+      let(:wk4){ Date.new(2013, 2, 12)..Date.new(2013, 2, 25) }
+      let(:wk5){ Date.new(2013, 2, 26)..Date.new(2013, 3, 11) }
+      let(:wk6){ Date.new(2013, 3, 12)..Date.new(2013, 3, 25) }
 
-
+      it "should know the correct date range" do
+        expect(es.period_for(Date.new(2013, 1, 1))).to eq(wk1)
+        expect(es.period_for(Date.new(2013, 1, 9))).to eq(wk1)
+        expect(es.period_for(Date.new(2013, 1, 14))).to eq(wk1)
+        
+        expect(es.period_for(Date.new(2013, 1, 15))).to eq(wk2)
+        expect(es.period_for(Date.new(2013, 1, 20))).to eq(wk2)
+        expect(es.period_for(Date.new(2013, 1, 28))).to eq(wk2)
+        
+        expect(es.period_for(Date.new(2013, 1, 29))).to eq(wk3)
+        expect(es.period_for(Date.new(2013, 2, 1))).to eq(wk3)
+        expect(es.period_for(Date.new(2013, 2, 11))).to eq(wk3)
+        
+        expect(es.period_for(Date.new(2013, 2, 12))).to eq(wk4)
+        expect(es.period_for(Date.new(2013, 2, 19))).to eq(wk4)
+        expect(es.period_for(Date.new(2013, 2, 25))).to eq(wk4)
+        
+        expect(es.period_for(Date.new(2013, 2, 26))).to eq(wk5)
+        expect(es.period_for(Date.new(2013, 3, 3))).to eq(wk5)
+        expect(es.period_for(Date.new(2013, 3, 11))).to eq(wk5)
+        
+        expect(es.period_for(Date.new(2013, 3, 12))).to eq(wk6)
+        expect(es.period_for(Date.new(2013, 3, 14))).to eq(wk6)
+        expect(es.period_for(Date.new(2013, 3, 25))).to eq(wk6)
+      end
     end
 
     context "quarterly" do
