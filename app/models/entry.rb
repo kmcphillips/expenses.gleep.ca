@@ -6,7 +6,6 @@ class Entry < ActiveRecord::Base
 
   has_many :amortized_entries
 
-  validates :user_id, presence: true
   validates :household_id, presence: true
   validates :category_id, presence: true
   validates :amount, presence: true, numericality: {greater_than: 0, message: "must be a positive number"}

@@ -1,12 +1,10 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
-
 FactoryGirl.define do
   factory :entry_schedule do
-    name "MyString"
-    category_id 1
-    household_id 1
-    amount 1.5
-    starts_on "2013-09-08"
-    frequency "MyString"
+    name "Mortgage"
+    association(:category, factory: :category)
+    association(:household, factory: :household)
+    amount 900
+    starts_on "2012-01-01"
+    frequency "monthly"
   end
 end

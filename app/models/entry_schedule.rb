@@ -21,16 +21,33 @@ class EntrySchedule < ActiveRecord::Base
 
   scope :active, -> { where(active: true) }
 
-  def current_period
-    period_for Date.today
-  end
-
   def period_for(date)
     PeriodCalculator.new(date, frequency, starts_on).period
   end
 
+  def applies_on?(date)
+    active? && period_for(date).try(:first) == date
+  end
+
+  def current_period
+    period_for Date.today
+  end
+
   def applies_today?
-    active? && current_period.try(:first) == Date.today
+    applies_on? Date.today
+  end
+
+  def build_entry(date)
+    period = period_for(date)
+
+    household.entries.build(
+      category: category,
+      description: name,
+      amount: amount,
+      incurred_on: period.first,
+      incurred_until: period.last,
+      entry_schedule: self
+    )
   end
 
   private
