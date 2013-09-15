@@ -25,7 +25,7 @@ class EntrySchedule < ActiveRecord::Base
   end
 
   def period_for(date)
-    PeriodCalculator.new(date, frequency).period
+    PeriodCalculator.new(date, frequency, starts_on).period
   end
 
   def applies_today?
@@ -35,12 +35,13 @@ class EntrySchedule < ActiveRecord::Base
   private
 
   class PeriodCalculator
-    attr_reader :date
+    attr_reader :date, :starts_on
 
-    def initialize(date, frequency)
+    def initialize(date, frequency, starts_on)
       raise "Unknown frequency '#{ frequency }'" unless EntrySchedule::FREQUENCIES.include?(frequency)
       @date = date
       @frequency = frequency
+      @starts_on = starts_on
     end
 
     def period
@@ -50,7 +51,13 @@ class EntrySchedule < ActiveRecord::Base
     private
 
     def monthly
-      
+      to = starts_on
+      offset_months = 0
+      offset_months += 1 until (to + offset_months.months) > date
+
+      from = to + (offset_months - 1).months
+      to = (from + 1.month) - 1.day
+
       from..to
     end
 
