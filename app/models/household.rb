@@ -6,6 +6,7 @@ class Household < ActiveRecord::Base
   has_many :entry_schedules
 
   validates :name, presence: true
+  validates :started_on, presence: true
 
   def categories_for_select
     { 

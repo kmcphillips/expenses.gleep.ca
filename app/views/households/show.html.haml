@@ -1,0 +1,12 @@
+.page-header
+  %h1
+    Household:
+    = @household.name
+
+%p
+  %strong Started On
+  %br
+  = @household.started_on.to_s(:words)
+
+.form-actions
+  = link_to "Edit Household", edit_household_path(@household), class: 'btn'

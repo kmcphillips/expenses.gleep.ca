@@ -42,7 +42,7 @@ class DatabaseSeeds
   end
 
   def household
-    @household ||= Household.create!(name: "Grace and Kevin")
+    @household ||= Household.create!(name: "Grace and Kevin", started_on: "2013-06-01")
   end
 
   private
