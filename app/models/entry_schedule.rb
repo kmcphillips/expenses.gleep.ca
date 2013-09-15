@@ -12,7 +12,6 @@ class EntrySchedule < ActiveRecord::Base
 
   has_many :entries
 
-  validates :name, presence: true
   validates :category_id, presence: true
   validates :household_id, presence: true
   validates :amount, presence: true, numericality: {greater_than: 0, message: "must be a positive number"}
@@ -20,6 +19,10 @@ class EntrySchedule < ActiveRecord::Base
   validates :starts_on, presence: {if: ->(es) { es.frequency != 'twice_monthly'}}
 
   scope :active, -> { where(active: true) }
+
+  def description
+    name.presence || category.name
+  end
 
   def period_for(date)
     PeriodCalculator.new(date, frequency, starts_on).period

@@ -15,7 +15,7 @@
   %tbody
     - @entry_schedules.each do |entry_schedule|
       %tr
-        %td= entry_schedule.name
+        %td= entry_schedule.description
         %td= entry_schedule.category.name
         %td= number_to_currency entry_schedule.amount, precision: 0
         %td= entry_schedule.frequency.humanize
