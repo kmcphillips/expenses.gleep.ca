@@ -111,8 +111,21 @@ describe EntrySchedule do
     end
 
     context "yearly" do
-      let(:es){ EntrySchedule.new params.merge(frequency: 'yearly') }
+      let(:es){ EntrySchedule.new params.merge(frequency: 'yearly', starts_on: Date.new(2012, 4, 1)) }
+      let(:period_2012){ Date.new(2012, 4, 1)..Date.new(2013, 3, 31) }
+      let(:period_2013){ Date.new(2013, 4, 1)..Date.new(2014, 3, 31) }
 
+      it "should know the correct date range" do
+        expect(es.period_for(Date.new(2012, 4, 1))).to eq(period_2012)
+        expect(es.period_for(Date.new(2012, 5, 11))).to eq(period_2012)
+        expect(es.period_for(Date.new(2013, 2, 28))).to eq(period_2012)
+        expect(es.period_for(Date.new(2013, 3, 31))).to eq(period_2012)
+
+        expect(es.period_for(Date.new(2013, 4, 1))).to eq(period_2013)
+        expect(es.period_for(Date.new(2013, 4, 11))).to eq(period_2013)
+        expect(es.period_for(Date.new(2013, 12, 31))).to eq(period_2013)
+        expect(es.period_for(Date.new(2014, 1, 14))).to eq(period_2013)
+      end
     end
   end
 

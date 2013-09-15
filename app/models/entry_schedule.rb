@@ -73,6 +73,16 @@ class EntrySchedule < ActiveRecord::Base
       # (starts_on - today).to_i % 14 == 0
     end
 
+    def quarterly
+      # TODO
+    end
+
+    def yearly
+      to = starts_on
+      to += 1.year until to > date
+      (to - 1.year)..(to - 1.day)
+    end
+
   end
 
 end
