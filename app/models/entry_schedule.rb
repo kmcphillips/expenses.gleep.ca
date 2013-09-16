@@ -85,10 +85,12 @@ class EntrySchedule < ActiveRecord::Base
     end
 
     def twice_monthly
-      if date.day < 15
-        date.beginning_of_month..Date.new(date.year, date.month, 14)
+      if date == date.end_of_month
+        date..(date + 14.days)
+      elsif date.day < 15
+        (date.beginning_of_month - 1.day)..Date.new(date.year, date.month, 14)
       else
-        Date.new(date.year, date.month, 15)..date.end_of_month
+        Date.new(date.year, date.month, 15)..(date.end_of_month - 1.day)
       end
     end
 

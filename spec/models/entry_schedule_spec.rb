@@ -113,17 +113,17 @@ describe EntrySchedule do
 
     context "twice_monthly" do
       let(:es){ EntrySchedule.new params.merge(frequency: 'twice_monthly') }
-      let(:first_half){ Date.new(2013, 9, 1)..Date.new(2013, 9, 14) }
-      let(:second_half){ Date.new(2013, 9, 15)..Date.new(2013, 9, 30) }
+      let(:first_half){ Date.new(2013, 8, 31)..Date.new(2013, 9, 14) }
+      let(:second_half){ Date.new(2013, 9, 15)..Date.new(2013, 9, 29) }
 
       it "should know the correct date range" do
-        expect(es.period_for(Date.new(2013, 9, 1))).to eq(first_half)
+        expect(es.period_for(Date.new(2013, 8, 31))).to eq(first_half)
         expect(es.period_for(Date.new(2013, 9, 10))).to eq(first_half)
         expect(es.period_for(Date.new(2013, 9, 14))).to eq(first_half)
 
         expect(es.period_for(Date.new(2013, 9, 15))).to eq(second_half)
         expect(es.period_for(Date.new(2013, 9, 20))).to eq(second_half)
-        expect(es.period_for(Date.new(2013, 9, 30))).to eq(second_half)
+        expect(es.period_for(Date.new(2013, 9, 29))).to eq(second_half)
       end
     end
 
