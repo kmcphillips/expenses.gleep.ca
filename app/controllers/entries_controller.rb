@@ -17,8 +17,8 @@ class EntriesController < AuthenticatedController
         @entries = @entries.income
         @filter_title = "income"
       when 'scheduled'
-        @entries = @entries # TODO
-        @filter_title = "TODO"
+        @entries = @entries.scheduled
+        @filter_title = "scheduled"
       end
 
     elsif params[:scope]
