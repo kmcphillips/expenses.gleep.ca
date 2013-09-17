@@ -18,6 +18,7 @@ gem 'omniauth-openid'
 
 gem 'less-rails'
 gem 'twitter-bootstrap-rails'
+gem 'bootstrap-will_paginate'
 gem 'therubyracer', platform: :ruby, require: 'v8'
 
 group :development do
