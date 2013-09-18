@@ -19,6 +19,7 @@ class Entry < ActiveRecord::Base
   scope :for_category, ->(category_id) { where(category_id: category_id) }
   scope :expense, -> { includes(:category).where("categories.income = ?", false) }
   scope :income, -> { includes(:category).where("categories.income = ?", true) }
+  scope :savings, -> { includes(:category).where("categories.category_type = ?", "savings") }
   scope :scheduled, -> { where("entry_schedule_id IS NOT NULL") }
   scope :this_month, -> { where("incurred_on BETWEEN ? AND ?", Date.today.beginning_of_month, Date.today.end_of_month) }
   scope :last_month, -> { 

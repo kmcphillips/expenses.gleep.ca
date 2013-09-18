@@ -19,6 +19,9 @@ class EntriesController < AuthenticatedController
       when 'scheduled'
         @entries = @entries.scheduled
         @filter_title = "scheduled"
+      when 'savings'
+        @entries = @entries.savings
+        @filter_title = "savings"
       end
 
     elsif params[:scope]
