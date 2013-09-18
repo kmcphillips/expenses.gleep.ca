@@ -19,7 +19,11 @@
       for
       = @filter_title
 
-%p= link_to "Add Entry", new_entry_path, class: 'btn btn-primary'
+.row-fluid
+  .span4= link_to "Add Entry", new_entry_path, class: 'btn btn-primary'
+  .span8.text-right= will_paginate(@entries)
+
+%br
 
 %table.table.table-striped.table-hover
   %thead
