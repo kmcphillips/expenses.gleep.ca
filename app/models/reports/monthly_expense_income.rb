@@ -35,7 +35,7 @@ class Reports::MonthlyExpenseIncome
     current = household.started_on.beginning_of_month
     @months = [current]
 
-    while current <= Date.today
+    while (current + 1.month) <= Date.today
       current += 1.month
       @months << current
     end
@@ -45,9 +45,9 @@ class Reports::MonthlyExpenseIncome
 
   def data
     [
-      {name: "Essential expense", stack: "expenses", data: data_essential},
-      {name: "Expenses", stack: "expenses", data: data_expenses},
       {name: "Savings expenses", stack: "expenses", data: data_savings},
+      {name: "Expenses", stack: "expenses", data: data_expenses},
+      {name: "Essential expense", stack: "expenses", data: data_essential},
       {name: "Income", stack: "income", data: data_income}
     ]
   end
