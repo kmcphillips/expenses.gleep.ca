@@ -12,4 +12,12 @@ module ApplicationHelper
     end
   end
 
+  def data_area?
+    params[:controller] == "data"
+  end
+
+  def formatted_currency(number)
+    content_tag(:span, number_to_currency(number.to_f, precision: 2), class: (number < 0 ? "text-error" : ""))
+  end
+
 end

@@ -6,6 +6,7 @@ class Category < ActiveRecord::Base
   validates :name, presence: true, uniqueness: {scope: :household_id}
   validates :household, presence: true
   validates :category_type, presence: true, inclusion: {in: TYPES}
+  validate :savings_only_expenses
 
   scope :income, -> { where(income: true) }
   scope :expense, -> { where(income: false) }
@@ -20,6 +21,12 @@ class Category < ActiveRecord::Base
 
   def essential?
     category_type == "essential"
+  end
+
+  private
+
+  def savings_only_expenses
+    errors.add(:income, "must be false for type 'savings'") if category_type == "savings" && income
   end
 
 end

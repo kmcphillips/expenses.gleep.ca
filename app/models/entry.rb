@@ -17,9 +17,10 @@ class Entry < ActiveRecord::Base
 
   scope :sorted, -> { order("incurred_on DESC") }
   scope :for_category, ->(category_id) { where(category_id: category_id) }
-  scope :expense, -> { includes(:category).where("categories.income = ?", false) }
-  scope :income, -> { includes(:category).where("categories.income = ?", true) }
-  scope :savings, -> { includes(:category).where("categories.category_type = ?", "savings") }
+  scope :expense, -> { includes(:category).where("categories.income = ?", false).references(:categories) }
+  scope :income, -> { includes(:category).where("categories.income = ?", true).references(:categories) }
+  scope :savings, -> { includes(:category).where("categories.category_type = ?", "savings").references(:categories) }
+  scope :except_savings, -> { includes(:category).where("categories.category_type != ?", "savings").references(:categories) }
   scope :scheduled, -> { where("entry_schedule_id IS NOT NULL") }
   scope :this_month, -> { where("incurred_on BETWEEN ? AND ?", Date.today.beginning_of_month, Date.today.end_of_month) }
   scope :last_month, -> { 
@@ -27,6 +28,8 @@ class Entry < ActiveRecord::Base
     where("incurred_on BETWEEN ? AND ?", date.beginning_of_month, date.end_of_month)
   }
   scope :unique, -> { where(entry_id: nil) }
+  scope :reportable, ->(household) { unique.where(household_id: household.id, incurred_on: (household.started_on..Date.today)) }
+  scope :year, ->(year) { where(incurred_on: (Date.new(year)..Date.new(year).end_of_year)) }
 
   def amortized?
     incurred_until.present?

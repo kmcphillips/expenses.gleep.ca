@@ -20,6 +20,7 @@ gem 'less-rails'
 gem 'twitter-bootstrap-rails'
 gem 'bootstrap-will_paginate'
 gem 'therubyracer', platform: :ruby, require: 'v8'
+gem 'highcharts-rails'
 
 group :development do
   gem 'letter_opener'

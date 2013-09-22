@@ -1,0 +1,57 @@
+- content_for :sidebar do
+  = render partial: "data/sidebar"
+
+.page-header
+  %h3 Totals for 2013
+
+%table.table.table-bordered.table-condensed.table-hover
+  %thead
+    %tr
+      %th Income
+      %th Expenses
+      %th Balance
+  %tbody
+    %tr
+      %td= formatted_currency @totals.total_income
+      %td= formatted_currency @totals.total_expenses
+      %td= formatted_currency @totals.total_balance
+
+.page-header
+  %h3 Projections for 2013
+
+%table.table.table-bordered.table-condensed.table-hover
+  %thead
+    %tr
+      %th
+      %th Income
+      %th Expenses
+      %th Balance
+  %tbody
+    %tr
+      %th Daily
+      %td= formatted_currency @totals.projections.daily.income
+      %td= formatted_currency @totals.projections.daily.expenses
+      %td= formatted_currency @totals.projections.daily.balance
+    %tr
+      %th Monthly
+      %td= formatted_currency @totals.projections.monthly.income
+      %td= formatted_currency @totals.projections.monthly.expenses
+      %td= formatted_currency @totals.projections.monthly.balance
+    %tr
+      %th Yearly
+      %td= formatted_currency @totals.projections.yearly.income
+      %td= formatted_currency @totals.projections.yearly.expenses
+      %td= formatted_currency @totals.projections.yearly.balance
+
+.page-header
+  %h3 Spent from savings for 2013
+
+%table.table.table-bordered.table-condensed.table-hover
+  %thead
+    %tr
+      - @totals.savings.keys.each do |category|
+        %th= category
+  %tbody
+    %tr
+      - @totals.savings.values.each do |amount|
+        %td= formatted_currency amount
