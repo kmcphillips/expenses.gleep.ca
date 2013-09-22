@@ -22,7 +22,7 @@
 
 .row-fluid
   .span4= link_to "Add Entry", new_entry_path, class: 'btn btn-primary'
-  .span8.text-right= will_paginate(@entries)
+  .span8.text-right= will_paginate(@entries, inner_window: 1)
 
 %br
 

@@ -15,7 +15,7 @@ class Entry < ActiveRecord::Base
   after_save :create_amortized_entries
   before_validation :set_household
 
-  scope :sorted, -> { order("incurred_on DESC") }
+  scope :sorted, -> { order("incurred_on DESC, created_at DESC") }
   scope :for_category, ->(category_id) { where(category_id: category_id) }
   scope :expense, -> { includes(:category).where("categories.income = ?", false).references(:categories) }
   scope :income, -> { includes(:category).where("categories.income = ?", true).references(:categories) }
@@ -25,7 +25,7 @@ class Entry < ActiveRecord::Base
   scope :non_essential, -> { includes(:category).where("categories.category_type = ?", "non-essential").references(:categories) }
   scope :scheduled, -> { where("entry_schedule_id IS NOT NULL") }
   scope :this_month, -> { where("incurred_on BETWEEN ? AND ?", Date.today.beginning_of_month, Date.today.end_of_month) }
-  scope :last_month, -> { 
+  scope :last_month, -> {
     date = Date.today - 1.month
     where("incurred_on BETWEEN ? AND ?", date.beginning_of_month, date.end_of_month)
   }

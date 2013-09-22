@@ -59,7 +59,7 @@ end
 
 DatabaseSeeds.new
 
-if File.exists? ENV["PRIVATE_SEED"]
+if ENV["PRIVATE_SEED"] && File.exists?(ENV["PRIVATE_SEED"])
   puts "-- Private seed file loaded"
   require ENV["PRIVATE_SEED"]
 end

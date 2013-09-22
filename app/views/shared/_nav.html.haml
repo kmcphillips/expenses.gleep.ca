@@ -1,4 +1,4 @@
-= nav_bar responsive: true, brand: "Expenses", brand_link: root_path, inverse: true do
+= nav_bar responsive: true, brand: "Expenses#{Rails.env.development? ? " <span class='label label-important'>Development</span>" : "" }".html_safe, brand_link: root_path, inverse: true do
   = menu_group do
     = menu_item "Add Entry", new_entry_path
     = menu_item_entries_override "Entries", entries_path
