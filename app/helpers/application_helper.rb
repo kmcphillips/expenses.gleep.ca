@@ -20,4 +20,14 @@ module ApplicationHelper
     content_tag(:span, number_to_currency(number.to_f, precision: 2), class: (number < 0 ? "text-error" : ""))
   end
 
+  def chart_from_json(hash, id=nil)
+    id = "chart-#{ (0...12).map{ ('a'..'z').to_a[rand(26)] }.join }" unless id
+    js = "$(function(){ $('##{ id }').highcharts(#{ hash.is_a?(Hash) ? hash.to_json : hash }); });".html_safe
+
+    [
+      content_tag(:div, '', id: id), 
+      content_tag(:script, js, type: "text/javascript")
+    ].join('').html_safe
+  end
+
 end

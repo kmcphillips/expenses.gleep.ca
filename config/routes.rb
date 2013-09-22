@@ -12,7 +12,7 @@ ExpensesGleepCa::Application.routes.draw do
   resources :entry_schedules
   resources :data, only: [:index] do
     collection do
-      
+      get :monthly_expense_income
     end
   end
 

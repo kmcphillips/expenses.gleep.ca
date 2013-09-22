@@ -1,0 +1,6 @@
+- content_for :sidebar do
+  = render partial: "data/sidebar"
+
+.page-header
+  %h2 Monthly expense with income
+  = chart_from_json(@chart, :monthly_expense_with_income)

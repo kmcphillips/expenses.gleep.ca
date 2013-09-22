@@ -21,6 +21,8 @@ class Entry < ActiveRecord::Base
   scope :income, -> { includes(:category).where("categories.income = ?", true).references(:categories) }
   scope :savings, -> { includes(:category).where("categories.category_type = ?", "savings").references(:categories) }
   scope :except_savings, -> { includes(:category).where("categories.category_type != ?", "savings").references(:categories) }
+  scope :essential, -> { includes(:category).where("categories.category_type = ?", "essential").references(:categories) }
+  scope :non_essential, -> { includes(:category).where("categories.category_type = ?", "non-essential").references(:categories) }
   scope :scheduled, -> { where("entry_schedule_id IS NOT NULL") }
   scope :this_month, -> { where("incurred_on BETWEEN ? AND ?", Date.today.beginning_of_month, Date.today.end_of_month) }
   scope :last_month, -> { 
