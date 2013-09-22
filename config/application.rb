@@ -28,5 +28,7 @@ module ExpensesGleepCa
     # config.i18n.default_locale = :de
 
     config.autoload_paths += %W(#{config.root}/app/jobs #{config.root}/lib)
+
+    config.assets.precompile += ['data.js']
   end
 end
