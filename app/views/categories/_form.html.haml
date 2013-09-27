@@ -1,8 +1,10 @@
 = form_for @category, html: { class: 'form-horizontal' } do |f|
+  = f.error_messages
+
   .control-group
     = f.label :name, class: 'control-label'
     .controls
-      = f.text_field :name, class: 'input-large', required: true
+      = f.text_field :name, class: 'input-large'
 
   .control-group
     = f.label :description, class: 'control-label'
