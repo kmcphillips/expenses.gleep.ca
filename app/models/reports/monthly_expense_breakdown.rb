@@ -36,7 +36,7 @@ class Reports::MonthlyExpenseBreakdown
         }
       },
       tooltip: {
-        valueSuffix: '%'
+        valuePrefix: '$'
       },
       series: [inner_series, outer_series]
     }
@@ -71,8 +71,8 @@ class Reports::MonthlyExpenseBreakdown
 
   def category_data
     [
-      {name: 'Essential', y: percentage(essential), color: "#A5D63B"},
-      {name: 'Non-essential', y: percentage(non_essential), color: "#273D54"}
+      {name: 'Essential', y: sum_amount(essential), color: "#A5D63B"},
+      {name: 'Non-essential', y: sum_amount(non_essential), color: "#273D54"}
     ]
   end
 
@@ -80,8 +80,8 @@ class Reports::MonthlyExpenseBreakdown
     results = []
 
     {"#8bbc21" => essential, "#0d233a" => non_essential}.each do |color, entries|
-      entries.map(&:category).uniq.each do |category|
-        results << {name: category.name, y: percentage(entries.for_category(category)), color: color}
+      entries.map(&:category).uniq.sort{|a,b| a.name <=> b.name}.each do |category|
+        results << {name: category.name, y: sum_amount(entries.for_category(category)), color: color}
       end
     end
 
@@ -104,8 +104,9 @@ class Reports::MonthlyExpenseBreakdown
     @total ||= [essential, non_essential].inject(0){|accu, rel| accu + rel.sum(:amount) }
   end
 
-  def percentage(rel)
-    ((rel.sum(:amount).to_f / total) * 100).round(2)
+  def sum_amount(rel)
+    # ((rel.sum(:amount).to_f / total) * 100).round(2)  # Percentage
+    rel.sum(:amount)
   end
 
 end
