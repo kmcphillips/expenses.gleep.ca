@@ -1,4 +1,4 @@
-class Reports::MonthlyExpenseBreakdown
+class Reports::ExpenseBreakdown
   attr_reader :household, :starts_on, :ends_on
 
   def initialize(household, year=nil, month=nil)
