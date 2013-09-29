@@ -17,4 +17,8 @@ class Household < ActiveRecord::Base
     }
   end
 
+  def applicable_years
+    (started_on.year..Date.today.year).to_a
+  end
+
 end

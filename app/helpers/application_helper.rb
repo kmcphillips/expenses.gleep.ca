@@ -21,6 +21,8 @@ module ApplicationHelper
   end
 
   def chart_from_json(hash, id=nil)
+    hash = hash.to_h unless hash.is_a?(Hash)
+
     id = "chart-#{ (0...12).map{ ('a'..'z').to_a[rand(26)] }.join }" unless id
     js = "$(function(){ $('##{ id }').highcharts(#{ hash.is_a?(Hash) ? hash.to_json : hash }); });".html_safe
 
