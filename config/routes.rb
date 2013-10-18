@@ -8,6 +8,7 @@ ExpensesGleepCa::Application.routes.draw do
 
   resources :categories, only: [:index, :new, :edit, :create, :update]
   resources :authorized_emails, only: [:index, :create, :destroy]
+  resources :login_tokens, only: [:index, :create, :destroy]
   resources :households, only: [:show, :edit, :update]
   resources :entry_schedules
   resources :data, only: [:index] do

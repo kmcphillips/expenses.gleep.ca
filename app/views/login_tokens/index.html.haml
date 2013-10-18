@@ -1,0 +1,27 @@
+.page-header
+  %h2 Login Tokens
+
+%p
+  = form_for @login_token || LoginToken.new, html: { class: 'form-inline' } do |f|
+    = f.error_messages
+    = f.select :user_id, current_household.users.sort.map{|u| [u.email, u.id] }
+    = f.text_field :description, cols: 60, rows: 2
+    = f.submit "Create Token", class: 'btn btn-primary'
+
+%table.table.table-striped.table-hover
+  %thead
+    %tr
+      %th Description
+      %th User
+      %th Token
+      %th Link
+      %th Actions
+  %tbody
+    - @login_tokens.each do |login_token|
+      %tr
+        %td= login_token.description
+        %td= login_token.user.email
+        %td= login_token.token
+        %td= login_token.login_link
+        %td
+          = link_to t('.destroy', :default => t("helpers.links.destroy")), login_token_path(login_token), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-mini btn-danger'
