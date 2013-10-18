@@ -6,7 +6,6 @@ FactoryGirl.define do
 
     after(:build) do |entry|
       user = FactoryGirl.create(:user)
-      binding.pry
       entry.user = user
       entry.category = FactoryGirl.create(:category, household: user.household)
       entry.household = user.household
