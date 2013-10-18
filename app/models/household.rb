@@ -2,6 +2,7 @@ class Household < ActiveRecord::Base
   has_many :users
   has_many :categories
   has_many :authorized_emails
+  has_many :login_tokens
   has_many :entries
   has_many :entry_schedules
 
@@ -9,7 +10,7 @@ class Household < ActiveRecord::Base
   validates :started_on, presence: true
 
   def categories_for_select
-    { 
+    {
       "" => [nil],
       "Expenses" => categories.select_expenses.map{|c| [c.name, c.id]},
       "Income" => categories.select_income.map{|c| [c.name, c.id]},
