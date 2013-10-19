@@ -4,7 +4,6 @@ class Users::TokenController < ApplicationController
   def token
     if session[:login_token_prevent_redirect]
       session[:login_token_prevent_redirect] = nil
-      # Show the view to be added to home screen
     else
       @user = LoginToken.find_by_token(params[:token]).try(:user)
 
