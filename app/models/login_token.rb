@@ -13,10 +13,6 @@ class LoginToken < ActiveRecord::Base
     self.token = SecureRandom.hex if self.token.blank?
   end
 
-  def login_link
-
-  end
-
   private
 
   def user_part_of_household

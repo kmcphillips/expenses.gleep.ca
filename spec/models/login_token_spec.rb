@@ -27,12 +27,6 @@ describe LoginToken do
     end
   end
 
-  describe "#login_link" do
-    it "should be tested" do
-      pending
-    end
-  end
-
   describe "#set_token" do
     it "should build a random token on validation" do
       expect(login_token.token).to be_blank
