@@ -2,6 +2,7 @@ ExpensesGleepCa::Application.routes.draw do
 
   root to: "home#index"
 
+  get "users/auth/token/:token" => "users/token#token", as: "user_token"
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
 
   resources :entries

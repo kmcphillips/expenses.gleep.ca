@@ -1,6 +1,7 @@
 class LoginTokensController < AuthenticatedController
 
   def index
+    session[:login_token_prevent_redirect] = true
     @login_tokens = current_household.login_tokens
   end
 

@@ -22,6 +22,6 @@
         %td= login_token.description
         %td= login_token.user.email
         %td= login_token.token
-        %td= login_token.login_link
+        %td= link_to "Link for home screen", user_token_url(token: login_token.token)
         %td
           = link_to t('.destroy', :default => t("helpers.links.destroy")), login_token_path(login_token), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-mini btn-danger'
