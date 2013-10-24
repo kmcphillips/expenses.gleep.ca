@@ -10,12 +10,13 @@ class AuthorizedEmailsController < AuthenticatedController
     if @authorized_email.save
       redirect_to authorized_emails_path, notice: 'Authorized email was successfully created.'
     else
-      render action: 'new'
+      @authorized_emails = current_household.authorized_emails
+      render action: 'index'
     end
   end
 
   def destroy
-    @authorized_email = AuthorizedEmail.find(params[:id])
+    @authorized_email = current_household.authorized_emails.find(params[:id])
     @authorized_email.destroy
 
     redirect_to authorized_emails_path, notice: 'Authorized email was successfully destroyed.'

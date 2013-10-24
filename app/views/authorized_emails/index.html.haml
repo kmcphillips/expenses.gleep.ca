@@ -2,7 +2,7 @@
   %h2 Authorized Emails
 
 %p
-  = form_for AuthorizedEmail.new, html: { class: 'form-inline' } do |f|
+  = form_for @authorized_email || AuthorizedEmail.new, html: { class: 'form-inline' } do |f|
     = f.email_field :email, required: true
     = f.submit "Add Email", class: 'btn btn-primary'
 
