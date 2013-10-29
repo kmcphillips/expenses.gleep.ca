@@ -34,5 +34,5 @@
       = f.date_field :incurred_until
 
   .form-actions
-    = f.submit "Save", class: 'btn btn-primary'
+    = f.submit "Save", class: 'btn btn-primary', data: {"form-actions-spinner" => true}
     = link_to "Cancel", entries_path, class: 'btn'

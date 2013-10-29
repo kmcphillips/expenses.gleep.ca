@@ -5,6 +5,9 @@ $ ->
   $('#incurred_until_group_toggle').on 'change', Expenses.toggleIncurredUntil
   Expenses.toggleIncurredUntil()
 
+  $(document).on 'click', "[data-form-actions-spinner]", ->
+    $(this).closest('.form-actions').find("input[type=submit], button, a.btn").addClass("disabled")
+
 
 class Expenses
   @toggleIncurredUntil: ->
