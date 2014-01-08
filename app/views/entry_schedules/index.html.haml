@@ -10,6 +10,7 @@
       %th Category
       %th Amount
       %th Frequency
+      %th Starts On
       %th Active?
       %th Actions
   %tbody
@@ -19,6 +20,7 @@
         %td= entry_schedule.category.name
         %td= number_to_currency entry_schedule.amount, precision: 0
         %td= entry_schedule.frequency.humanize
+        %td= entry_schedule.to_s(:words)
         %td= boolean_glyph entry_schedule.active?
         %td
           = link_to "Edit", edit_entry_schedule_path(entry_schedule), class: 'btn btn-mini'
