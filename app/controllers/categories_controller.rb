@@ -23,6 +23,16 @@ class CategoriesController < AuthenticatedController
     end
   end
 
+  def update
+    @category = current_household.categories.find(params[:id])
+
+    if @category.update(categories_params)
+      redirect_to categories_path, notice: "Category updated successfully."
+    else
+      render :edit
+    end
+  end
+
   private
 
   def categories_params
