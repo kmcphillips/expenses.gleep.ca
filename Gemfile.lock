@@ -238,7 +238,7 @@ DEPENDENCIES
   pry
   pry-rails
   quiet_assets
-  rails
+  rails (= 4.0.2)
   rspec
   rspec-mocks
   rspec-rails
