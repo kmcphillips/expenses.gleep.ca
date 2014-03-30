@@ -16,6 +16,8 @@ ExpensesGleepCa::Application.routes.draw do
     collection do
       get :monthly_expense_income
       get :expense_breakdown
+      get :yearly_breakdown
+      get :yearly_totals
     end
   end
 

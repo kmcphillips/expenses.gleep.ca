@@ -1,7 +1,15 @@
 class DataController < AuthenticatedController
 
   def index
+    redirect_to yearly_totals_data_path
+  end
+
+  def yearly_totals
     @totals = Reports::YearlyTotals.new(current_household, params[:year] || Date.today.year)
+  end
+
+  def yearly_breakdown
+    @breakdown = Reports::YearlyBreakdown.new(current_household, params[:year] || Date.today.year)
   end
 
   def monthly_expense_income

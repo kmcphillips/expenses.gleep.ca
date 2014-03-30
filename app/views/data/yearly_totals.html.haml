@@ -7,8 +7,8 @@
     = @totals.year
 
 = form_tag "", class: "form-inline", method: :get do
-  = select_tag :year, options_for_select((2013..(Date.today.year)), selected: params[:year].presence.try(:to_i))
-  = button_tag "Filter", class: "btn btn-primary"
+  = select_tag :year, options_for_select(@totals.household.applicable_years, selected: params[:year].presence.try(:to_i))
+  = button_tag "Change year", class: "btn btn-primary"
 
 %table.table.table-bordered.table-condensed.table-hover
   %thead
