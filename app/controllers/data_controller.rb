@@ -1,7 +1,7 @@
 class DataController < AuthenticatedController
 
   def index
-    redirect_to yearly_totals_data_path
+    redirect_to yearly_breakdown_data_path
   end
 
   def yearly_totals
