@@ -16,8 +16,14 @@ module ApplicationHelper
     params[:controller] == "data"
   end
 
-  def formatted_currency(number)
-    content_tag(:span, number_to_currency(number.to_f, precision: 2), class: (number < 0 ? "text-error" : ""))
+  def formatted_currency(number, opts={})
+    opts = {zeroes: true}.merge(opts)
+
+    if opts[:zeroes] || !(number.to_f == 0.0)
+      content_tag(:span, number_to_currency(number.to_f, precision: 2), class: (number < 0 ? "text-error" : ""))
+    else
+      nil
+    end
   end
 
   def chart_from_json(hash, id=nil)
@@ -27,7 +33,7 @@ module ApplicationHelper
     js = "$(function(){ $('##{ id }').highcharts(#{ hash.is_a?(Hash) ? hash.to_json : hash }); });".html_safe
 
     [
-      content_tag(:div, '', id: id), 
+      content_tag(:div, '', id: id),
       content_tag(:script, js, type: "text/javascript")
     ].join('').html_safe
   end

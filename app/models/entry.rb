@@ -32,6 +32,7 @@ class Entry < ActiveRecord::Base
   scope :unique, -> { where(entry_id: nil) }
   scope :reportable, ->(household) { unique.where(household_id: household.id, incurred_on: (household.started_on..Date.today)) }
   scope :year, ->(year) { where(incurred_on: (Date.new(year)..Date.new(year).end_of_year)) }
+  scope :month, ->(year, month) {where(incurred_on: (Date.new(year, month)..Date.new(year, month).end_of_month)) }
 
   def amortized?
     incurred_until.present?

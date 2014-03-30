@@ -4,8 +4,58 @@
 .page-header
   %h3
     Breakdown for
-    = @breakdown.year
+    = @report.year
 
 = form_tag "", class: "form-inline", method: :get do
-  = select_tag :year, options_for_select(@breakdown.household.applicable_years, selected: params[:year].presence.try(:to_i))
+  = select_tag :year, options_for_select(@report.household.applicable_years, selected: params[:year].presence.try(:to_i))
   = button_tag "Change year", class: "btn btn-primary"
+
+%table.table.table-bordered.table-condensed.table-hover
+  %thead
+    %tr
+      %th &nbsp;
+      - Date::ABBR_MONTHNAMES.compact.each do |month|
+        %th= month
+  %tbody
+    %tr
+      %td{colspan: 13} Income
+
+    %tr
+      %th Total
+      - @report.income.each do |amount|
+        %td= formatted_currency amount, zeroes: false
+
+    %tr
+      %td{colspan: 13} Expenses
+
+    - @report.expenses_by_type.each do |type, expenses|
+      %tr
+        %th= type
+        - expenses.each do |amount|
+          %td= formatted_currency amount, zeroes: false
+
+    %tr
+      %td{colspan: 13} Spent from savings
+
+    - @report.from_savings_by_type.each do |type, expenses|
+      %tr
+        %th= type
+        - expenses.each do |amount|
+          %td= formatted_currency amount, zeroes: false
+
+    %tr
+      %td{colspan: 13} Totals
+
+    %tr
+      %th Earned
+      - @report.income.each do |amount|
+        %td= formatted_currency amount, zeroes: false
+    %tr
+      %th Spent
+      - @report.total_expenses.each do |amount|
+        %td= formatted_currency amount, zeroes: false
+    %tr
+      %th Balance
+      - @report.total_balance.each do |amount|
+        %td
+          %em{style: "font-weight: bold"}= formatted_currency amount, zeroes: false

@@ -9,7 +9,7 @@ class DataController < AuthenticatedController
   end
 
   def yearly_breakdown
-    @breakdown = Reports::YearlyBreakdown.new(current_household, params[:year] || Date.today.year)
+    @report = Reports::YearlyBreakdown.new(current_household, params[:year] || Date.today.year)
   end
 
   def monthly_expense_income
