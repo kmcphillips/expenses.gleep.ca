@@ -2,7 +2,13 @@
   = render partial: "data/sidebar"
 
 .page-header
-  %h3 Totals for 2013
+  %h3
+    Totals for
+    = @totals.year
+
+= form_tag "", class: "form-inline", method: :get do
+  = select_tag :year, options_for_select((2013..(Date.today.year)), selected: params[:year].presence.try(:to_i))
+  = button_tag "Filter", class: "btn btn-primary"
 
 %table.table.table-bordered.table-condensed.table-hover
   %thead
@@ -17,7 +23,9 @@
       %td= formatted_currency @totals.total_balance
 
 .page-header
-  %h3 Projections for 2013
+  %h3
+    Projections for
+    = @totals.year
 
 %table.table.table-bordered.table-condensed.table-hover
   %thead
@@ -44,7 +52,9 @@
       %td= formatted_currency @totals.projections.yearly.balance
 
 .page-header
-  %h3 Spent from savings for 2013
+  %h3
+    Spent from savings for
+    = @totals.year
 
 %table.table.table-bordered.table-condensed.table-hover
   %thead

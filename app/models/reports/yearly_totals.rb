@@ -2,7 +2,7 @@ class Reports::YearlyTotals
   attr_reader :year, :household
 
   def initialize(household, year)
-    @year = year
+    @year = year.to_i
     @household = household
   end
 
@@ -16,6 +16,10 @@ class Reports::YearlyTotals
 
   def total_balance
     total_income - total_expenses
+  end
+
+  def total_from_savings
+    savings["Total"]
   end
 
   def projections

@@ -1,7 +1,7 @@
 class DataController < AuthenticatedController
 
   def index
-    @totals = Reports::YearlyTotals.new(current_household, 2013)
+    @totals = Reports::YearlyTotals.new(current_household, params[:year] || Date.today.year)
   end
 
   def monthly_expense_income
