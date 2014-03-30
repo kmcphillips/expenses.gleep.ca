@@ -1,10 +1,4 @@
-class Reports::YearlyTotals
-  attr_reader :year, :household
-
-  def initialize(household, year)
-    @year = year.to_i
-    @household = household
-  end
+class Reports::YearlyTotals < Reports::YearlyBase
 
   def total_income
     @total_income ||= entries.except_savings.income.year(@year).sum(:amount)
@@ -45,10 +39,6 @@ class Reports::YearlyTotals
   end
 
   private
-
-  def entries
-    @entries ||= Entry.reportable(@household)
-  end
 
   class Projections
     attr_reader :totals
