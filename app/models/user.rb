@@ -12,6 +12,14 @@ class User < ActiveRecord::Base
     !!AuthorizedEmail.where(email: email).first
   end
 
+  def update_from_auth(auth)
+    info = auth.try(:info)
+
+    if info
+      update_column(:name, info["name"]) if info["name"].present?
+    end
+  end
+
   private
 
   def assign_default_household
