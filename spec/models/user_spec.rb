@@ -13,4 +13,10 @@ describe User do
       expect(User.new(email: "fake@asdf.com").authorized?).to be_false
     end
   end
+
+  describe "#short_name" do
+    it "should return the first name" do
+      expect(FactoryGirl.build(:user).short_name).to eq("Spendy")
+    end
+  end
 end

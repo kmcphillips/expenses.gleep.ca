@@ -20,6 +20,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def short_name
+    name.split(" ").first if name.present?
+  end
+
   private
 
   def assign_default_household
