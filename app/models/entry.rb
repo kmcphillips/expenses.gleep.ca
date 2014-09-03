@@ -65,6 +65,14 @@ class Entry < ActiveRecord::Base
     end
   end
 
+  def readable
+    str = "#{ ActionController::Base.helpers.number_to_currency(amount, precision: 0) } for #{ category.name } "
+    str << "by #{ user.short_name }" if user
+    str << ": #{ description }" if description.present?
+
+    str
+  end
+
   private
 
   def incurred_until_range

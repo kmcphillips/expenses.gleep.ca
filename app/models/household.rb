@@ -22,4 +22,8 @@ class Household < ActiveRecord::Base
     (started_on.year..Date.today.year).to_a.reverse
   end
 
+  def recent_entry
+    @recent_entry ||= entries.unique.order('created_at DESC').first
+  end
+
 end

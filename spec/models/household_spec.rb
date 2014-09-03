@@ -11,4 +11,17 @@ describe Household do
     end
   end
 
+  describe "#recent" do
+    it "should return the most recent entry" do
+      FactoryGirl.create(:entry, household: household)
+      FactoryGirl.create(:entry, household: household)
+      last = FactoryGirl.create(:entry, household: household)
+      expect(last.household.recent_entry).to eq(last)
+    end
+
+    it "should deal with an empty list" do
+      expect(household.recent_entry).to be_nil
+    end
+  end
+
 end
