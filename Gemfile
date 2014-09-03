@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.0.4'
+gem 'rails', '~> 4.0.4'
 gem 'mysql2'
 
 gem 'sass-rails'
@@ -41,6 +41,5 @@ group :development, :test do
 end
 
 group :doc do
-  # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
 end
