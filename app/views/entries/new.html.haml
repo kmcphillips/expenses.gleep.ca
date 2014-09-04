@@ -1,10 +1,4 @@
 .page-header
   %h2 Add Entry
 
-- if current_household.recent_entry
-  %p
-    Most recent entry:
-    %br
-    %em= current_household.recent_entry.readable
-
 = render :partial => "form"

@@ -1,6 +1,13 @@
 = form_for @entry, html: { class: 'form-horizontal' } do |f|
   = f.error_messages
 
+  - if current_household.recent_entry
+    .control-group
+      %label.control-label Most recent entry
+      .controls
+        %p{style: 'padding: 5px; margin: 0'}
+          %em= current_household.recent_entry.readable
+
   .control-group
     = f.label :category_id, class: 'control-label', value: "Category"
     .controls
