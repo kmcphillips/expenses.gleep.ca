@@ -30,14 +30,12 @@ end
 
 group :development, :test do
   gem 'thin'
-  gem 'rspec'
   gem 'rspec-rails'
   gem 'rspec-mocks'
-  gem 'factory_girl'
   gem 'factory_girl_rails'
   gem 'timecop'
-  gem 'pry'
   gem 'pry-rails'
+  gem 'transpec'
 end
 
 group :doc do
