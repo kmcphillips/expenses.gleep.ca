@@ -29,17 +29,17 @@ describe EntrySchedule do
 
     it "should return false if it is not active" do
       entry_schedule.active = false
-      expect(entry_schedule.applies_on?(date)).to be_false
+      expect(entry_schedule.applies_on?(date)).to be_falsey
     end
 
     it "should return true if the current period starts today" do
-      entry_schedule.should_receive(:period_for).with(date).and_return(date...(date + 2.days))
-      expect(entry_schedule.applies_on?(date)).to be_true
+      expect(entry_schedule).to receive(:period_for).with(date).and_return(date...(date + 2.days))
+      expect(entry_schedule.applies_on?(date)).to be_truthy
     end
 
     it "should return true if the current period does not start today" do
-      entry_schedule.should_receive(:period_for).with(date).and_return((date - 2.days)...(date + 2.days))
-      expect(entry_schedule.applies_on?(date)).to be_false
+      expect(entry_schedule).to receive(:period_for).with(date).and_return((date - 2.days)...(date + 2.days))
+      expect(entry_schedule.applies_on?(date)).to be_falsey
     end
   end
 
@@ -48,7 +48,7 @@ describe EntrySchedule do
 
     it "should return the period_for today" do
       result = double
-      entry_schedule.should_receive(:period_for).with(Date.today).and_return(result)
+      expect(entry_schedule).to receive(:period_for).with(Date.today).and_return(result)
       expect(entry_schedule.current_period).to equal(result)
     end
   end
@@ -58,7 +58,7 @@ describe EntrySchedule do
 
     it "should return the applies_on? for today" do
       result = double
-      entry_schedule.should_receive(:applies_on?).with(Date.today).and_return(result)
+      expect(entry_schedule).to receive(:applies_on?).with(Date.today).and_return(result)
       expect(entry_schedule.applies_today?).to equal(result)
     end
   end
@@ -221,18 +221,42 @@ describe EntrySchedule do
     let(:entry_schedule){ FactoryGirl.create(:entry_schedule, category: category, household: household) }
 
     before(:each) do
-      entry_schedule.stub(:period_for).with(date).and_return(period)
+      allow(entry_schedule).to receive(:period_for).with(date).and_return(period)
     end
 
     subject{ entry_schedule.build_entry(date) }
 
-    it{ should be_valid }
-    its(:category){ should eq(category) }
-    its(:description){ should eq(entry_schedule.name) }
-    its(:amount){ should eq(entry_schedule.amount) }
-    its(:incurred_on){ should eq(date) }
-    its(:incurred_until){ should eq(Date.new(2012, 1, 31)) }
-    its(:entry_schedule){ should eq(entry_schedule) }
+    it{ is_expected.to be_valid }
+
+    describe '#category' do
+      subject { super().category }
+      it { is_expected.to eq(category) }
+    end
+
+    describe '#description' do
+      subject { super().description }
+      it { is_expected.to eq(entry_schedule.name) }
+    end
+
+    describe '#amount' do
+      subject { super().amount }
+      it { is_expected.to eq(entry_schedule.amount) }
+    end
+
+    describe '#incurred_on' do
+      subject { super().incurred_on }
+      it { is_expected.to eq(date) }
+    end
+
+    describe '#incurred_until' do
+      subject { super().incurred_until }
+      it { is_expected.to eq(Date.new(2012, 1, 31)) }
+    end
+
+    describe '#entry_schedule' do
+      subject { super().entry_schedule }
+      it { is_expected.to eq(entry_schedule) }
+    end
   end
 
 end

@@ -35,7 +35,6 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'timecop'
   gem 'pry-rails'
-  gem 'transpec'
 end
 
 group :doc do

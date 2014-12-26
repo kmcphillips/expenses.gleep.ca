@@ -5,24 +5,24 @@ describe LoginToken do
 
   describe "validations" do
     it "should be valid" do
-      expect(login_token.save).to be_true
+      expect(login_token.save).to be_truthy
     end
 
     describe "#user_part_of_household" do
       it "should be invalid if the household is missing" do
         login_token.household = nil
-        expect(login_token.valid?).to be_false
+        expect(login_token.valid?).to be_falsey
       end
 
       it "should be invalid if the user is missing" do
         login_token.user = nil
-        expect(login_token.valid?).to be_false
+        expect(login_token.valid?).to be_falsey
       end
 
       it "should be invalid if the user is from a different household" do
         login_token.user = FactoryGirl.create(:user)
         expect(login_token.user.household).to_not eq(login_token.household)
-        expect(login_token.valid?).to be_false
+        expect(login_token.valid?).to be_falsey
       end
     end
   end

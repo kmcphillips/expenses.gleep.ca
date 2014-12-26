@@ -23,7 +23,7 @@ describe DailyScheduledEntries do
     end
 
     it "should default to all households" do
-      Household.should_receive(:all).and_return([household])
+      expect(Household).to receive(:all).and_return([household])
       expect(DailyScheduledEntries.new.households).to eq([household])
     end
   end
@@ -58,8 +58,15 @@ describe DailyScheduledEntries do
 
       subject{ Entry.unique.first }
 
-      its(:entry_schedule){ should eq(mortgage) }
-      its(:incurred_on){ should eq(date) }
+      describe '#entry_schedule' do
+        subject { super().entry_schedule }
+        it { is_expected.to eq(mortgage) }
+      end
+
+      describe '#incurred_on' do
+        subject { super().incurred_on }
+        it { is_expected.to eq(date) }
+      end
     end
   end
 end
