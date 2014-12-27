@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  devise :token_authenticatable, :rememberable, :trackable, :omniauthable, :database_authenticatable, :validatable, omniauth_providers: [:google]
+  devise :rememberable, :trackable, :omniauthable, :database_authenticatable, :validatable, omniauth_providers: [:google]
   # :recoverable, :confirmable, :lockable, :timeoutable, :database_authenticatable
 
   belongs_to :household
