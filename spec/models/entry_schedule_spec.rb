@@ -140,26 +140,52 @@ describe EntrySchedule do
         expect(es.period_for(Date.new(2013, 1, 1))).to eq(wk1)
         expect(es.period_for(Date.new(2013, 1, 9))).to eq(wk1)
         expect(es.period_for(Date.new(2013, 1, 14))).to eq(wk1)
-        
+
         expect(es.period_for(Date.new(2013, 1, 15))).to eq(wk2)
         expect(es.period_for(Date.new(2013, 1, 20))).to eq(wk2)
         expect(es.period_for(Date.new(2013, 1, 28))).to eq(wk2)
-        
+
         expect(es.period_for(Date.new(2013, 1, 29))).to eq(wk3)
         expect(es.period_for(Date.new(2013, 2, 1))).to eq(wk3)
         expect(es.period_for(Date.new(2013, 2, 11))).to eq(wk3)
-        
+
         expect(es.period_for(Date.new(2013, 2, 12))).to eq(wk4)
         expect(es.period_for(Date.new(2013, 2, 19))).to eq(wk4)
         expect(es.period_for(Date.new(2013, 2, 25))).to eq(wk4)
-        
+
         expect(es.period_for(Date.new(2013, 2, 26))).to eq(wk5)
         expect(es.period_for(Date.new(2013, 3, 3))).to eq(wk5)
         expect(es.period_for(Date.new(2013, 3, 11))).to eq(wk5)
-        
+
         expect(es.period_for(Date.new(2013, 3, 12))).to eq(wk6)
         expect(es.period_for(Date.new(2013, 3, 14))).to eq(wk6)
         expect(es.period_for(Date.new(2013, 3, 25))).to eq(wk6)
+      end
+    end
+
+    context "weekly" do
+      let(:es){ EntrySchedule.new params.merge(frequency: 'weekly', starts_on: Date.new(2013, 1, 1)) }
+      let(:wk1){ Date.new(2013, 1, 1)..Date.new(2013, 1, 7) }
+      let(:wk2){ Date.new(2013, 1, 8)..Date.new(2013, 1, 14) }
+      let(:wk3){ Date.new(2013, 1, 15)..Date.new(2013, 1, 21) }
+      let(:wk4){ Date.new(2013, 1, 22)..Date.new(2013, 1, 28) }
+
+      it "should know the correct date range" do
+        expect(es.period_for(Date.new(2013, 1, 1))).to eq(wk1)
+        expect(es.period_for(Date.new(2013, 1, 4))).to eq(wk1)
+        expect(es.period_for(Date.new(2013, 1, 7))).to eq(wk1)
+
+        expect(es.period_for(Date.new(2013, 1, 8))).to eq(wk2)
+        expect(es.period_for(Date.new(2013, 1, 10))).to eq(wk2)
+        expect(es.period_for(Date.new(2013, 1, 14))).to eq(wk2)
+
+        expect(es.period_for(Date.new(2013, 1, 15))).to eq(wk3)
+        expect(es.period_for(Date.new(2013, 1, 17))).to eq(wk3)
+        expect(es.period_for(Date.new(2013, 1, 21))).to eq(wk3)
+
+        expect(es.period_for(Date.new(2013, 1, 22))).to eq(wk4)
+        expect(es.period_for(Date.new(2013, 1, 24))).to eq(wk4)
+        expect(es.period_for(Date.new(2013, 1, 28))).to eq(wk4)
       end
     end
 

@@ -3,10 +3,11 @@ class EntrySchedule < ActiveRecord::Base
     "monthly",
     "twice_monthly",
     "every_two_weeks",
+    "weekly",
     "quarterly",
     "yearly"
   ]
-  
+
   belongs_to :category
   belongs_to :household
 
@@ -98,6 +99,12 @@ class EntrySchedule < ActiveRecord::Base
       to = starts_on
       to += 14.days until to > date
       (to - 14.days)..(to - 1.day)
+    end
+
+    def weekly
+      to = starts_on
+      to += 7.days until to > date
+      (to - 7.days)..(to - 1.day)
     end
 
     def quarterly
