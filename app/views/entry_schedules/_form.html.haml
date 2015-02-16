@@ -24,7 +24,7 @@
     = f.date_field :starts_on, class: "form-control"
 
   - unless @entry_schedule.new_record?
-    .form-group
+    .checkbox
       = f.label :active do
         = f.check_box :active
         Active?
