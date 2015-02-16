@@ -8,9 +8,11 @@
     to
     = @chart.ends_on.to_s(:words)
 
-= form_tag "", class: "form-inline", method: :get do 
-  = select_month(params[:month].present? ? Date.new(Date.today.year, params[:month].to_i) : nil, field_name: "placeholder", prompt: "(All year)").gsub('date[placeholder]', 'month').html_safe
-  = select_tag :year, options_for_select(current_household.applicable_years, selected: params[:year].presence.try(:to_i))
+= form_tag "", class: "form-inline", method: :get do
+  .form-group
+    = select_month(params[:month].present? ? Date.new(Date.today.year, params[:month].to_i) : nil, {field_name: "placeholder", prompt: "(All year)"}, class: "form-control").gsub('date[placeholder]', 'month').html_safe
+  .form-group
+    = select_tag :year, options_for_select(current_household.applicable_years, selected: params[:year].presence.try(:to_i)), class: "form-control"
   = button_tag "Filter", class: "btn btn-primary"
 
   = chart_from_json(@chart, :expense_breakdown)

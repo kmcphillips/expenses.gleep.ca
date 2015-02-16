@@ -1,8 +1,10 @@
 .well.sidebar-nav
   %ul.nav.nav-list
-    %li.nav-header Data
+    %li
+      %h5 Data
     %li= link_to "Yearly breakdown", yearly_breakdown_data_path
     %li= link_to "Yearly totals", yearly_totals_data_path
-    %li.nav-header Graphs
+    %li
+      %h5 Graphs
     %li= link_to "Monthly expense and income", monthly_expense_income_data_path
     %li= link_to "Expense breakdown", expense_breakdown_data_path

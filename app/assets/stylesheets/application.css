@@ -19,3 +19,7 @@
 .pagination {
   margin: 0;
 }
+
+table.table {
+  margin-top: 20px;
+}
