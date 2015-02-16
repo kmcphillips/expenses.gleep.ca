@@ -2,11 +2,13 @@
   %h2 Login Tokens
 
 %p
-  = form_for @login_token || LoginToken.new, html: { class: 'form-inline' } do |f|
+  = form_for @login_token || LoginToken.new, html: { class: "form-inline" } do |f|
     = f.error_messages
-    = f.select :user_id, current_household.users.sort.map{|u| [u.email, u.id] }
-    = f.text_field :description, cols: 60, rows: 2
-    = f.submit "Create Token", class: 'btn btn-primary'
+    .form-group
+      = f.select :user_id, current_household.users.sort.map{|u| [u.email, u.id] }, {}, class: "form-control"
+    .form-group
+      = f.text_field :description, class: "form-control"
+    = f.submit "Create Token", class: "btn btn-primary"
 
 %table.table.table-striped.table-hover
   %thead

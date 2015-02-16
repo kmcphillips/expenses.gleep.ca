@@ -3,8 +3,9 @@
 
 %p
   = form_for @authorized_email || AuthorizedEmail.new, html: { class: 'form-inline' } do |f|
-    = f.email_field :email, required: true
-    = f.submit "Add Email", class: 'btn btn-primary'
+    .form-group
+      = f.email_field :email, required: true, class: "form-control"
+    = f.submit "Add Email", class: "btn btn-primary"
 
 %table.table.table-striped.table-hover
   %thead
