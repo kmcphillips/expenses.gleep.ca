@@ -3,7 +3,7 @@
  *= require_self
  */
 
-
+/*
 #error_explanation {
    .alert();
    .alert-error();
@@ -17,4 +17,4 @@
 
 .pagination {
   margin: 0;
-}
+}*/
