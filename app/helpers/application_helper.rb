@@ -38,4 +38,10 @@ module ApplicationHelper
     ].join('').html_safe
   end
 
+  def nav_bar_brand
+    brand = "Expenses"
+    brand << " <span class='label label-danger'>Development</span>" if Rails.env.development?
+    brand.html_safe
+  end
+
 end
