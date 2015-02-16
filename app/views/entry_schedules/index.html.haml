@@ -23,5 +23,5 @@
         %td= entry_schedule.starts_on.try(:to_s, :words)
         %td= boolean_glyph entry_schedule.active?
         %td
-          = link_to "Edit", edit_entry_schedule_path(entry_schedule), class: 'btn btn-mini'
+          = link_to "Edit", edit_entry_schedule_path(entry_schedule), class: 'btn btn-default btn-mini'
           = link_to "Destroy", entry_schedule_path(entry_schedule), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-mini btn-danger'
