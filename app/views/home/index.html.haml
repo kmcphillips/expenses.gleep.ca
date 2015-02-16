@@ -1,2 +1,16 @@
 .page-header
-  %h2
+  %h2 Welcome
+
+%p
+  Logged in as
+  %strong= current_user.email
+  for
+  %strong= current_household.name
+
+%h3 Recent Activity
+
+%ul
+  - @recent_entries.each do |entry|
+    %li= entry.readable
+
+= link_to "Add Entry", new_entry_path, class: "btn btn-primary"

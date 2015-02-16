@@ -33,6 +33,7 @@ class Entry < ActiveRecord::Base
   scope :reportable, ->(household) { unique.where(household_id: household.id, incurred_on: (household.started_on..Date.today)) }
   scope :year, ->(year) { where(incurred_on: (Date.new(year)..Date.new(year).end_of_year)) }
   scope :month, ->(year, month) {where(incurred_on: (Date.new(year, month)..Date.new(year, month).end_of_month)) }
+  scope :recent, ->(limit=5) { sorted.unique.limit(limit) }
 
   def amortized?
     incurred_until.present?
@@ -66,8 +67,8 @@ class Entry < ActiveRecord::Base
   end
 
   def readable
-    str = "#{ ActionController::Base.helpers.number_to_currency(amount, precision: 0) } for #{ category.name } "
-    str << "by #{ user.short_name }" if user
+    str = "#{ ActionController::Base.helpers.number_to_currency(amount, precision: 0) } for #{ category.name }"
+    str << " by #{ user.short_name }" if user
     str << ": #{ description }" if description.present?
 
     str
