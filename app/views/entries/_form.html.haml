@@ -1,45 +1,38 @@
-= form_for @entry, html: { class: 'form-horizontal' } do |f|
+= form_for @entry do |f|
   = f.error_messages
 
   - if current_household.recent_entry
-    .control-group
-      %label.control-label Most recent entry
-      .controls
-        %p{style: 'padding: 5px; margin: 0'}
-          %em= current_household.recent_entry.readable
+    .form-group
+      %label Most recent entry
+      %p{style: 'padding: 5px; margin: 0'}
+        %em= current_household.recent_entry.readable
 
-  .control-group
-    = f.label :category_id, class: 'control-label', value: "Category"
-    .controls
-      = f.select :category_id, grouped_options_for_select(current_household.categories_for_select, selected: f.object.category_id)
+  .form-group
+    = f.label :category_id, value: "Category"
+    = f.select :category_id, grouped_options_for_select(current_household.categories_for_select, selected: f.object.category_id), {prompt: "Select a category..."}, class: "form-control"
 
-  .control-group
-    = f.label :amount, class: 'control-label'
-    .controls
-      .input-prepend
-        %span.add-on $
-        = f.number_field :amount, class: "input-mini"
+  .form-group
+    = f.label :amount
+    .input-group
+      %span.input-group-addon $
+      = f.number_field :amount, class: "form-control input-mini"
 
-  .control-group
-    = f.label :description, class: 'control-label'
-    .controls
-      = f.text_field :description
+  .form-group
+    = f.label :description
+    = f.text_field :description, class: "form-control"
 
-  .control-group
-    = f.label :incurred_on, class: 'control-label'
-    .controls
-      = f.date_field :incurred_on
+  .form-group
+    = f.label :incurred_on
+    = f.date_field :incurred_on, class: "form-control"
 
-  .control-group
-    = label_tag "Over a fixed period?", nil, class: 'control-label'
-    .controls
+  .checkbox
+    = label_tag do
       = check_box_tag :amortized, true, f.object.incurred_until.present?, id: :incurred_until_group_toggle
+      Over a fixed period?
 
-  .control-group#incurred_until_group
-    = f.label :incurred_until, class: 'control-label'
-    .controls
-      = f.date_field :incurred_until
+  .form-group#incurred_until_group
+    = f.label :incurred_until
+    = f.date_field :incurred_until, class: "form-control"
 
-  .form-actions
-    = f.submit "Save", class: 'btn btn-primary', data: {"form-actions-spinner" => true}
-    = link_to "Cancel", entries_path, class: 'btn'
+  = f.submit "Save", class: 'btn btn-primary', data: {"form-actions-spinner" => true}
+  = link_to "Cancel", entries_path, class: 'btn btn-default'

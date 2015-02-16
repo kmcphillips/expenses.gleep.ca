@@ -11,7 +11,6 @@ class Household < ActiveRecord::Base
 
   def categories_for_select
     {
-      "" => [nil],
       "Expenses" => categories.select_expenses.map{|c| [c.name, c.id]},
       "Income" => categories.select_income.map{|c| [c.name, c.id]},
       "Savings" => categories.select_savings.map{|c| [c.name, c.id]}
