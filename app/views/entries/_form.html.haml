@@ -30,7 +30,7 @@
       = check_box_tag :amortized, true, f.object.incurred_until.present?, id: :incurred_until_group_toggle
       Over a fixed period?
 
-  .form-group#incurred_until_group
+  .form-group.hidden#incurred_until_group
     = f.label :incurred_until
     = f.date_field :incurred_until, class: "form-control"
 

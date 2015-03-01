@@ -12,7 +12,7 @@ $ ->
 class Expenses
   @toggleIncurredUntil: ->
     if $('#incurred_until_group_toggle').prop('checked')
-      $('#incurred_until_group').show()
+      $('#incurred_until_group').removeClass("hidden")
     else
-      $('#incurred_until_group').hide()
+      $('#incurred_until_group').addClass("hidden")
       $('#incurred_until_group input').val('')
