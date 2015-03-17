@@ -25,7 +25,7 @@ gem 'highcharts-rails'
 group :development do
   gem 'letter_opener'
   gem 'capistrano'
-  gem 'rvm-capistrano'
+  gem 'rvm-capistrano', require: false
 end
 
 group :development, :test do
