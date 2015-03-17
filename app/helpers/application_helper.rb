@@ -6,9 +6,9 @@ module ApplicationHelper
 
   def boolean_glyph(value)
     if value
-      content_tag :i, "", class: "icon-ok text-success"
+      content_tag :i, "", class: "fa fa-check text-success"
     else
-      content_tag :i, "", class: "icon-remove text-warning"
+      content_tag :i, "", class: "fa fa-times text-warning"
     end
   end
 
