@@ -10,11 +10,13 @@ class Reports::YearlyBreakdown < Reports::YearlyBase
     @expenses_by_type = {}
 
     Category.expense.without_savings.sorted.each do |category|
-      @expenses_by_type[category.name] = []
+      row = []
 
       months.each do |month|
-        @expenses_by_type[category.name] << entries_for_month(month).for_category(category).sum(:amount) * -1
+        row << entries_for_month(month).for_category(category).sum(:amount) * -1
       end
+
+      @expenses_by_type[category.name] = row unless row.all?{|r| r.zero?}
     end
 
     @expenses_by_type
@@ -27,11 +29,13 @@ class Reports::YearlyBreakdown < Reports::YearlyBase
 
     Category.only_savings.sorted.each do |category|
       category_name = category.name.gsub(" (Savings)", "")
-      @from_savings_by_type[category_name] = []
+      row = []
 
       months.each do |month|
-        @from_savings_by_type[category_name] << entries_for_month(month).for_category(category).sum(:amount) * -1
+        row << entries_for_month(month).for_category(category).sum(:amount) * -1
       end
+
+      @from_savings_by_type[category_name] = row unless row.all?{|r| r.zero?}
     end
 
     @from_savings_by_type
