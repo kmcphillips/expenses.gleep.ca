@@ -18,6 +18,7 @@ ExpensesGleepCa::Application.routes.draw do
       get :expense_breakdown
       get :yearly_breakdown
       get :yearly_totals
+      get :car
     end
   end
 

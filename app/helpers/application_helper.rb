@@ -17,10 +17,10 @@ module ApplicationHelper
   end
 
   def formatted_currency(number, opts={})
-    opts = {zeroes: true}.merge(opts)
+    opts = {zeroes: true, precision: 2}.merge(opts)
 
     if opts[:zeroes] || !(number.to_f == 0.0)
-      content_tag(:span, number_to_currency(number.to_f, precision: 2), class: (number < 0 ? "text-danger" : ""))
+      content_tag(:span, number_to_currency(number.to_f, precision: opts[:precision]), class: (number < 0 ? "text-danger" : ""))
     else
       nil
     end

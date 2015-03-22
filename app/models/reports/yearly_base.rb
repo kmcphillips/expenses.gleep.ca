@@ -6,10 +6,19 @@ class Reports::YearlyBase
     @household = household
   end
 
+  def number_of_days
+    @number_of_days ||= begin
+      start_date = [Date.new(year), household.started_on].max
+      end_date = [Date.new(year).end_of_year, Date.today].min
+
+      (end_date - start_date).to_i
+    end
+  end
+
   protected
 
   def entries
-    @entries ||= Entry.reportable(@household)
+    @entries ||= Entry.reportable(household)
   end
 
 end

@@ -12,6 +12,10 @@ class DataController < AuthenticatedController
     @report = Reports::YearlyBreakdown.new(current_household, params[:year] || Date.today.year)
   end
 
+  def car
+    @car = Reports::Car.new(current_household, params[:year] || Date.today.year)
+  end
+
   def monthly_expense_income
     @chart = Reports::MonthlyExpenseIncome.new(current_household)
   end

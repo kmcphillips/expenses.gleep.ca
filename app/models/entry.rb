@@ -16,7 +16,7 @@ class Entry < ActiveRecord::Base
   before_validation :set_household
 
   scope :sorted, -> { order("incurred_on DESC, entries.created_at DESC") }
-  scope :for_category, ->(category_id) { where(category_id: category_id) }
+  scope :for_category, ->(category) { where(category: category) }
   scope :expense, -> { includes(:category).where("categories.income = ?", false).references(:categories) }
   scope :income, -> { includes(:category).where("categories.income = ?", true).references(:categories) }
   scope :savings, -> { includes(:category).where("categories.category_type = ?", "savings").references(:categories) }

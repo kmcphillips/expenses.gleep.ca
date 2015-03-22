@@ -20,13 +20,6 @@ class Reports::YearlyTotals < Reports::YearlyBase
     @projections ||= Projections.new(self)
   end
 
-  def number_of_days
-    return @number_of_days if @number_of_days
-    start_date = [Date.new(@year), household.started_on].max
-    end_date = [Date.new(@year).end_of_year, Date.today].min
-    @number_of_days = (end_date - start_date).to_i
-  end
-
   def savings
     return @savings if @savings
 

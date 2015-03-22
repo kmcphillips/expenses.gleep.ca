@@ -1,0 +1,36 @@
+- content_for :sidebar do
+  = render partial: "data/sidebar"
+
+.page-header
+  %h3
+    Cost of car ownership in
+    = @car.year
+
+%p
+  Reporting on categories:
+  %strong= @car.categories.map(&:name).sort.join(", ")
+
+%p
+  = form_tag "", class: "form-inline", method: :get do
+    .form-group
+      = select_tag :year, options_for_select(@car.household.applicable_years, selected: params[:year].presence.try(:to_i)), class: "form-control"
+    = button_tag "Change year", class: "btn btn-primary"
+
+
+%table.table.table-bordered.table-condensed.table-hover
+  %tbody
+    %tr
+      %th Total cost
+      %td= formatted_currency @car.total_cost, precision: 0
+    %tr
+      %th Average monthly cost
+      %td= formatted_currency @car.average_monthly_cost
+    %tr
+      %th Average daily cost
+      %td= formatted_currency @car.average_daily_cost
+    %tr
+      %td{colspan: 2} Breakdown per category
+    - @car.cost_per_category.each do |category, amount|
+      %tr
+        %th= category
+        %td= formatted_currency amount, precision: 0
