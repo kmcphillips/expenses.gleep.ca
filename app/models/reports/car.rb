@@ -11,7 +11,7 @@ class Reports::Car < Reports::YearlyBase
   end
 
   def car_entries
-    entries.year(@year).for_category(categories)
+    entries.for_category(categories)
   end
 
   def total_cost

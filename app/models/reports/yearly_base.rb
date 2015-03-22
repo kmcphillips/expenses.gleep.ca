@@ -17,8 +17,12 @@ class Reports::YearlyBase
 
   protected
 
-  def entries
+  def all_entries
     @entries ||= Entry.reportable(household)
+  end
+
+  def entries
+    all_entries.year(year)
   end
 
 end

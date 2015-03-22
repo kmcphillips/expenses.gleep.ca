@@ -69,7 +69,7 @@ class Reports::YearlyBreakdown < Reports::YearlyBase
   end
 
   def entries_for_month(month)
-    entries.month(year, month)
+    all_entries.month(year, month)
   end
 
 end

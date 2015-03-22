@@ -1,11 +1,11 @@
 class Reports::YearlyTotals < Reports::YearlyBase
 
   def total_income
-    @total_income ||= entries.except_savings.income.year(@year).sum(:amount)
+    @total_income ||= entries.except_savings.income.sum(:amount)
   end
 
   def total_expenses
-    @total_expenses ||= entries.except_savings.expense.year(@year).sum(:amount)
+    @total_expenses ||= entries.except_savings.expense.sum(:amount)
   end
 
   def total_balance
@@ -23,9 +23,9 @@ class Reports::YearlyTotals < Reports::YearlyBase
   def savings
     return @savings if @savings
 
-    @savings = {"Total" => entries.savings.year(@year).sum(:amount) }
+    @savings = {"Total" => entries.savings.sum(:amount) }
     Category.only_savings.each do |category|
-      @savings[category.name.gsub("(Savings)", "")] = entries.savings.year(@year).where(category_id: category.id).sum(:amount)
+      @savings[category.name.gsub("(Savings)", "")] = entries.savings.where(category_id: category.id).sum(:amount)
     end
 
     @savings
