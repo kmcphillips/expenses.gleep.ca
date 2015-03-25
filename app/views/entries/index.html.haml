@@ -15,7 +15,7 @@
         %h5 Entries For
       %li
         .form-group
-          = select_tag :entry_type_filter, grouped_options_for_select(current_household.categories_for_select), id: "entry_type_filter_select", class: "form-control"
+          = select_tag :entry_type_filter, grouped_options_for_select(current_household.categories_for_select, {}, prompt: "Select a category..."), id: "entry_type_filter_select", class: "form-control"
 
 .page-header
   %h2

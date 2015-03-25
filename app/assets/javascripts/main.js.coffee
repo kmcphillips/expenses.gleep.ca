@@ -1,6 +1,9 @@
 $ ->
   $('#entry_type_filter_select').on 'change', ->
-    window.location = "/entries?category_id=#{ $(this).val() }"
+    categoryId = $(this).val()
+
+    if categoryId
+      window.location = "/entries?category_id=#{ categoryId }"
 
   $('#incurred_until_group_toggle').on 'change', Expenses.toggleIncurredUntil
   Expenses.toggleIncurredUntil()
