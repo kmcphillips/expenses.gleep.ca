@@ -1,6 +1,6 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   include Devise::Controllers::Rememberable
-  skip_before_action :verify_authenticity_token, only: [:google]
+  skip_before_action :verify_authenticity_token
 
   def google
     @user = User.find_for_open_id(request.env["omniauth.auth"], current_user)
