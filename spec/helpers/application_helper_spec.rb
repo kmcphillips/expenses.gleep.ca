@@ -10,11 +10,11 @@ describe ApplicationHelper do
 
   describe "#boolean_glyph" do
     it "should return an icon for true" do
-      expect(helper.boolean_glyph(false)).to eq("<i class=\"icon-remove text-warning\"></i>")
+      expect(helper.boolean_glyph(false)).to eq("<i class=\"fa fa-times text-warning\"></i>")
     end
 
     it "should reuturn an icon for false" do
-      expect(helper.boolean_glyph(true)).to eq("<i class=\"icon-ok text-success\"></i>")
+      expect(helper.boolean_glyph(true)).to eq("<i class=\"fa fa-check text-success\"></i>")
     end
   end
 
