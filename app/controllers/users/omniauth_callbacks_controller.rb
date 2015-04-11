@@ -2,8 +2,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   include Devise::Controllers::Rememberable
   skip_before_action :verify_authenticity_token
 
-  def google
-    @user = User.find_for_open_id(request.env["omniauth.auth"], current_user)
+  def google_oauth2
+    @user = User.find_for_google_oauth2(request.env["omniauth.auth"], current_user)
 
     if !@user.authorized?
       flash[:error] = "Your email address has not been authorized."

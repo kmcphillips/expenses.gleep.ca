@@ -14,7 +14,7 @@ gem 'whenever', require: false
 gem 'will_paginate'
 gem 'quiet_assets'
 gem 'devise'
-gem 'omniauth-openid'
+gem 'omniauth-google-oauth2'
 
 gem 'less-rails'
 gem 'twitter-bootstrap-rails'
