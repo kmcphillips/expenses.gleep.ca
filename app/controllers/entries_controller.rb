@@ -51,7 +51,10 @@ class EntriesController < AuthenticatedController
     @entry = current_household.entries.build(entry_params)
     @entry.user = current_user
 
-    if @entry.save
+    if previous_entry && @entry.similar_to?(previous_entry)
+      @entry.errors.add(:base, "This appears to be a duplicate of the most recent expense added: #{ previous_entry.readable }")
+      render action: 'new'
+    elsif @entry.save
       redirect_to new_entry_path, notice: 'Entry was successfully created.'
     else
       render action: 'new'
@@ -79,6 +82,10 @@ class EntriesController < AuthenticatedController
 
   def entry_params
     params.require(:entry).permit(:category_id, :description, :amount, :incurred_on, :incurred_until)
+  end
+
+  def previous_entry
+    @previous_entry ||= current_household.entries.order("created_at ASC").last
   end
 
 end

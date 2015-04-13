@@ -74,6 +74,10 @@ class Entry < ActiveRecord::Base
     str
   end
 
+  def similar_to?(other)
+    other && other.category == category && other.amount == amount && other.household == household
+  end
+
   private
 
   def incurred_until_range
