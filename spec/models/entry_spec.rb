@@ -14,7 +14,7 @@ describe Entry do
   end
 
   describe "#similar_to?" do
-    let(:similar){ Entry.new(category: entry.category, amount: entry.amount, household: entry.household, description: "The similar one") }
+    let(:similar){ Entry.new(category: entry.category, amount: entry.amount, household: entry.household, description: entry.description) }
 
     it "should be similar" do
       expect(entry).to be_similar_to(similar)
@@ -22,6 +22,11 @@ describe Entry do
 
     it "should not be similar" do
       similar.category = FactoryGirl.create(:category)
+      expect(entry).to_not be_similar_to(similar)
+    end
+
+    it "should not be similar if the descriptions differ" do
+      similar.description = "different"
       expect(entry).to_not be_similar_to(similar)
     end
 

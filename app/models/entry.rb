@@ -75,7 +75,7 @@ class Entry < ActiveRecord::Base
   end
 
   def similar_to?(other)
-    other && other.category == category && other.amount == amount && other.household == household
+    other && other.category == category && other.amount == amount && other.household == household && other.description == description
   end
 
   private
