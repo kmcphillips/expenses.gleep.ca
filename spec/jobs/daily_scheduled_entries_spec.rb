@@ -22,9 +22,8 @@ describe DailyScheduledEntries do
       expect(DailyScheduledEntries.new(households: [household]).households).to eq([household])
     end
 
-    it "should default to all households" do
-      expect(Household).to receive(:all).and_return([household])
-      expect(DailyScheduledEntries.new.households).to eq([household])
+    it "should default to all active households" do
+      expect(DailyScheduledEntries.new.households).to eq(Household.active)
     end
   end
 

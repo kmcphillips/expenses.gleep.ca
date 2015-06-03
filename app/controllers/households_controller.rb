@@ -8,16 +8,21 @@ class HouseholdsController < AuthenticatedController
   end
 
   def update
+    if @household.update(households_params)
+      redirect_to household_path(@household), notice: 'Household was successfully updated.'
+    else
+      render action: 'edit'
+    end
   end
 
   private
 
   def set_objects
-    @household = current_household
+    @household = Household.find(params[:id])
   end
 
   def households_params
-    params.require(:household).permit(:name, :started_on)
+    params.require(:household).permit(:name, :started_on, :active)
   end
 
 end

@@ -9,6 +9,8 @@ class Household < ActiveRecord::Base
   validates :name, presence: true
   validates :started_on, presence: true
 
+  scope :active, ->{ where(active: true) }
+
   def categories_for_select
     {
       "Expenses" => categories.select_expenses.map{|c| [c.name, c.id]},

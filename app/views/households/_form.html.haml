@@ -7,5 +7,10 @@
     = f.label :started_on
     = f.date_field :started_on, class: "form-control"
 
+  .checkbox
+    = f.label :active do
+      = f.check_box :active
+      Active?
+
   = f.submit "Save", class: "btn btn-primary"
   = link_to "Cancel", household_path(@household), class: "btn btn-default"

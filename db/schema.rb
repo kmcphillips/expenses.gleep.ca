@@ -11,11 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140403141055) do
+ActiveRecord::Schema.define(version: 20150603133314) do
 
-  create_table "authorized_emails", force: true do |t|
-    t.string   "email"
-    t.integer  "household_id"
+  create_table "authorized_emails", force: :cascade do |t|
+    t.string   "email",        limit: 255
+    t.integer  "household_id", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -23,15 +23,15 @@ ActiveRecord::Schema.define(version: 20140403141055) do
   add_index "authorized_emails", ["email"], name: "index_authorized_emails_on_email", using: :btree
   add_index "authorized_emails", ["household_id"], name: "index_authorized_emails_on_household_id", using: :btree
 
-  create_table "categories", force: true do |t|
-    t.string   "name"
-    t.text     "description"
-    t.boolean  "income",        default: false
-    t.boolean  "active",        default: true
-    t.integer  "household_id"
+  create_table "categories", force: :cascade do |t|
+    t.string   "name",          limit: 255
+    t.text     "description",   limit: 65535
+    t.boolean  "income",        limit: 1,     default: false
+    t.boolean  "active",        limit: 1,     default: true
+    t.integer  "household_id",  limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "category_type", default: "non-essential"
+    t.string   "category_type", limit: 255,   default: "non-essential"
   end
 
   add_index "categories", ["active"], name: "index_categories_on_active", using: :btree
@@ -40,20 +40,20 @@ ActiveRecord::Schema.define(version: 20140403141055) do
   add_index "categories", ["income"], name: "index_categories_on_income", using: :btree
   add_index "categories", ["name"], name: "index_categories_on_name", using: :btree
 
-  create_table "entries", force: true do |t|
-    t.string   "type"
-    t.integer  "category_id"
-    t.integer  "household_id"
-    t.integer  "user_id"
-    t.text     "description"
-    t.integer  "amount"
+  create_table "entries", force: :cascade do |t|
+    t.string   "type",              limit: 255
+    t.integer  "category_id",       limit: 4
+    t.integer  "household_id",      limit: 4
+    t.integer  "user_id",           limit: 4
+    t.text     "description",       limit: 65535
+    t.integer  "amount",            limit: 4
     t.date     "incurred_on"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.date     "incurred_until"
-    t.float    "amortized_amount"
-    t.integer  "entry_id"
-    t.integer  "entry_schedule_id"
+    t.float    "amortized_amount",  limit: 24
+    t.integer  "entry_id",          limit: 4
+    t.integer  "entry_schedule_id", limit: 4
   end
 
   add_index "entries", ["category_id"], name: "index_entries_on_category_id", using: :btree
@@ -64,14 +64,14 @@ ActiveRecord::Schema.define(version: 20140403141055) do
   add_index "entries", ["type"], name: "index_entries_on_type", using: :btree
   add_index "entries", ["user_id"], name: "index_entries_on_user_id", using: :btree
 
-  create_table "entry_schedules", force: true do |t|
-    t.string   "name"
-    t.integer  "category_id"
-    t.integer  "household_id"
-    t.float    "amount"
+  create_table "entry_schedules", force: :cascade do |t|
+    t.string   "name",         limit: 255
+    t.integer  "category_id",  limit: 4
+    t.integer  "household_id", limit: 4
+    t.float    "amount",       limit: 24
     t.date     "starts_on"
-    t.string   "frequency"
-    t.boolean  "active",       default: true
+    t.string   "frequency",    limit: 255
+    t.boolean  "active",       limit: 1,   default: true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -80,18 +80,19 @@ ActiveRecord::Schema.define(version: 20140403141055) do
   add_index "entry_schedules", ["category_id"], name: "index_entry_schedules_on_category_id", using: :btree
   add_index "entry_schedules", ["household_id"], name: "index_entry_schedules_on_household_id", using: :btree
 
-  create_table "households", force: true do |t|
-    t.string   "name"
+  create_table "households", force: :cascade do |t|
+    t.string   "name",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.date     "started_on"
+    t.boolean  "active",     limit: 1,   default: true
   end
 
-  create_table "login_tokens", force: true do |t|
-    t.string   "token"
-    t.integer  "household_id"
-    t.integer  "user_id"
-    t.text     "description"
+  create_table "login_tokens", force: :cascade do |t|
+    t.string   "token",        limit: 255
+    t.integer  "household_id", limit: 4
+    t.integer  "user_id",      limit: 4
+    t.text     "description",  limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -100,20 +101,20 @@ ActiveRecord::Schema.define(version: 20140403141055) do
   add_index "login_tokens", ["token"], name: "index_login_tokens_on_token", using: :btree
   add_index "login_tokens", ["user_id"], name: "index_login_tokens_on_user_id", using: :btree
 
-  create_table "users", force: true do |t|
-    t.string   "email",                default: "", null: false
-    t.string   "encrypted_password",   default: "", null: false
+  create_table "users", force: :cascade do |t|
+    t.string   "email",                limit: 255, default: "", null: false
+    t.string   "encrypted_password",   limit: 255, default: "", null: false
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",        default: 0
+    t.integer  "sign_in_count",        limit: 4,   default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.string   "authentication_token"
+    t.string   "current_sign_in_ip",   limit: 255
+    t.string   "last_sign_in_ip",      limit: 255
+    t.string   "authentication_token", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "household_id"
-    t.string   "name"
+    t.integer  "household_id",         limit: 4
+    t.string   "name",                 limit: 255
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
