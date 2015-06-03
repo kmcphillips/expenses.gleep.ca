@@ -1,5 +1,5 @@
 class AuthenticatedController < ApplicationController
-  before_action :authenticate_user!, :reset_login_token_session, :check_read_only
+  before_action :authenticate_user!, :reset_login_token_session, :check_read_only, :check_active_household
 
   helper_method :current_household
 
@@ -25,6 +25,10 @@ class AuthenticatedController < ApplicationController
     end
 
     true
+  end
+
+  def check_active_household
+    flash[:error] = "Your household is not active" unless current_household.active?
   end
 
 end
